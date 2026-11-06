@@ -1,0 +1,97 @@
+
+/* Rebuilt WorkRelief dialogs — visual reference: approved Add company screenshot. */
+:root{--wm-blue:#075cf5;--wm-ink:#0b1e43;--wm-muted:#7488ac;--wm-border:#dce6f5}
+html:has(.wm-overlay:not([hidden]):not(.hidden)),body:has(.wm-overlay:not([hidden]):not(.hidden)){overflow:hidden!important}
+.wm-overlay{position:fixed;inset:0;z-index:999999;display:flex;align-items:center;justify-content:center;padding:clamp(9px,4.35vh,46px);background:rgba(18,34,60,.64);backdrop-filter:blur(2px)}
+.wm-dialog{position:relative;display:flex;flex-direction:column;width:min(992px,calc(100vw - 32px));max-height:calc(100dvh - 40px);height:min(1010px,calc(100dvh - 92px));background:#fbfcff;border:1px solid #e0e8f4;border-radius:11px;box-shadow:0 25px 80px #06193645;overflow:hidden;color:var(--wm-ink)}
+.wm-dialog.wm-compact{height:auto;max-height:calc(100dvh - 40px);width:min(640px,calc(100vw - 32px))}
+.wm-header{flex:none;padding:29px 28px 0}.wm-eyebrow{display:block;color:var(--wm-blue);font-weight:850;letter-spacing:1.9px;font-size:11px;text-transform:uppercase;margin:0 0 4px}
+.wm-heading{font-size:34px;line-height:1.13;letter-spacing:-1.3px;font-weight:800;margin:0 55px 4px 0;color:#0a1b3d}
+.wm-description{font-size:14px;line-height:1.5;color:#7085a9;margin:0 50px 18px 0}
+.wm-close{position:absolute;top:18px;right:18px;display:grid;place-items:center;width:41px;height:41px;border:1px solid #dce6f5;border-radius:11px;background:#fff;color:#405980;font-size:24px;box-shadow:0 4px 14px #203d6510;cursor:pointer}
+.wm-tabs{display:flex;gap:0;margin:5px 28px 0;overflow:auto;border-bottom:1px solid #dce5f3;flex:none}
+.wm-tab{flex:1 0 auto;display:flex;align-items:center;justify-content:center;gap:10px;padding:15px 12px;white-space:nowrap;background:transparent;border:0;border-bottom:3px solid transparent;border-radius:0;color:#657b9e;font-size:13px;font-weight:700;cursor:pointer}
+.wm-tab.active{color:var(--wm-blue);border-bottom-color:var(--wm-blue)}.wm-tab-icon{font-size:20px}
+.wm-scroll{flex:1;overflow:auto;min-height:0;padding:20px 28px;scrollbar-width:thin;scroll-behavior:smooth}
+.wm-form{display:flex;flex-direction:column;gap:18px;margin:0;padding:0}
+.wm-section{border:1px solid #e0e8f5;border-radius:9px;background:#fff;box-shadow:0 5px 20px #1a397007;padding:21px 27px}
+.wm-section-head{display:grid;grid-template-columns:53px 1fr;gap:24px;align-items:center;min-height:52px;margin-bottom:13px}
+.wm-section-symbol{display:grid;place-items:center;width:52px;height:52px;border-radius:50%;background:#e6eeff;color:#1262f5;font-size:24px}
+.wm-section:nth-child(2) .wm-section-symbol{background:#e2f7ee;color:#088c52}
+.wm-section:nth-child(3) .wm-section-symbol{background:#f0e9ff;color:#8040e8}
+.wm-section h3{font-size:17px;line-height:1.3;letter-spacing:-.4px;color:#0a1e42;font-weight:800;margin:0 0 3px}
+.wm-section .wm-section-description{margin:0;color:#778caf;font-size:12px;line-height:1.45}
+.wm-grid,.wm-section .wr-form-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 26px}
+.wm-section .field{min-width:0;margin:0;padding:0;border:0;background:transparent}
+.wm-section .field label{display:block;font-size:12px;font-weight:750;color:#112850;margin:0 0 4px}
+.wm-section :is(input:not([type=checkbox]):not([type=radio]),select,textarea){box-sizing:border-box;min-width:0;max-width:100%;width:100%;min-height:40px;padding:9px 14px;background:#fff;color:#233b64;font:inherit;font-size:13px;border:1px solid #cedbf0;border-radius:8px;box-shadow:none}
+.wm-section :is(input,select,textarea):focus{outline:3px solid #1262f520;border-color:#1262f5}
+.wm-section :is(input,textarea)::placeholder{color:#8296b6}
+.wm-footer{flex:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 23px;background:#fff;border-top:1px solid #e0e7f3}
+.wm-footer button{min-width:120px;min-height:43px;margin:0;border-radius:9px;font-size:12px;font-weight:750}
+.wm-footer .btn.primary,.wm-footer button[type=submit]{margin-left:auto;background:#075cf5;border-color:#075cf5;color:white}
+.wm-footer [hidden]{display:none!important}
+.wm-compact .wm-section{box-shadow:none}.wm-compact .wm-scroll{max-height:60dvh}
+.wm-compare{display:grid;grid-template-columns:125px 1fr 1fr;gap:0;margin-top:12px;border:1px solid #e0e8f5;border-radius:9px;overflow:hidden}
+.wm-compare>div{padding:10px;border-bottom:1px solid #e7eef8;overflow-wrap:anywhere;font-size:12px}.wm-compare>div:nth-child(6n + 1),.wm-compare>div:nth-child(6n + 2),.wm-compare>div:nth-child(6n + 3){background:#f4f8ff}
+.wm-dialog .wr-form-section,.wm-dialog .wr-detail-section{display:block}
+@media(max-width:720px){.wm-overlay{padding:8px}.wm-dialog{width:100%;height:calc(100dvh - 16px);max-height:calc(100dvh - 16px)}.wm-header{padding:22px 16px 0}.wm-heading{font-size:27px}.wm-tabs{margin:4px 16px 0}.wm-tab{flex:0 0 auto}.wm-scroll{padding:15px 16px}.wm-section{padding:16px}.wm-section-head{grid-template-columns:42px 1fr;gap:12px}.wm-section-symbol{width:42px;height:42px}.wm-grid,.wm-section .wr-form-pair{grid-template-columns:1fr}.wm-footer{padding:12px 16px}.wm-compare{grid-template-columns:85px 1fr 1fr}}
+
+.wm-overlay[hidden]{display:none!important}
+.wm-scroll .wm-form{width:100%}
+.wm-form .wm-section>.wm-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 26px}
+@media(max-width:720px){.wm-form .wm-section>.wm-grid{grid-template-columns:1fr}}
+
+
+/* WorkRelief unified modal design system — CRM, forms, setup, analytics and confirmations */
+.wm-overlay{background:rgba(12,28,55,.60);backdrop-filter:blur(5px)}
+.wm-dialog{border-radius:20px;border:1px solid #dbe5f3;box-shadow:0 30px 100px rgba(7,26,60,.27);background:#f7f9fd;height:auto;min-height:0;max-height:calc(100dvh - 40px)}
+.wm-dialog:not(.wm-compact){height:min(880px,calc(100dvh - 65px))}
+.wm-header{padding:29px 32px 19px;background:linear-gradient(125deg,#fff 0%,#f5f8ff 100%);border-bottom:1px solid #e7edf7}
+.wm-eyebrow{font-size:11px;font-weight:800;letter-spacing:1.65px;color:var(--wr-crm-accent,var(--wm-blue,#075cf5))}
+.wm-heading{font-size:30px;line-height:1.18;letter-spacing:-.9px;margin-top:7px;margin-bottom:8px}
+.wm-description{font-size:13px;line-height:1.65;margin-bottom:0;max-width:690px}
+.wm-close{top:22px;right:23px;border-radius:12px;transition:background .16s,transform .16s}
+.wm-close:hover{background:#eaf1ff;transform:translateY(-1px)}
+.wm-close:focus-visible,.wm-footer button:focus-visible{outline:3px solid #1768f555;outline-offset:2px}
+.wm-scroll{padding:25px 32px 28px;overscroll-behavior:contain}
+.wm-form{gap:18px}
+.wm-section{border:1px solid #e0e8f3;border-radius:16px;padding:24px;background:#fff;box-shadow:0 8px 26px rgba(14,40,83,.035)}
+.wm-section-head{grid-template-columns:48px minmax(0,1fr);gap:15px;min-height:48px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid #eef2f8}
+.wm-section-symbol{width:46px;height:46px;border-radius:14px;background:#eaf1ff}
+.wm-section h3{font-size:17px;letter-spacing:-.3px}
+.wm-section .wm-section-description{margin-top:3px;line-height:1.5}
+.wm-section .wm-grid{gap:17px 18px}
+.wm-section .field{min-width:0}
+.wm-section .field label{font-size:12px;margin-bottom:7px}
+.wm-section :is(input:not([type=checkbox]):not([type=radio]),select,textarea){min-height:44px;border-radius:10px;padding:11px 13px;border-color:#cbd9ed;font-size:13px}
+.wm-section textarea{min-height:94px}
+.wm-footer{padding:15px 28px;background:#fff;box-shadow:0 -5px 18px rgba(15,43,78,.025)}
+.wm-footer button{border-radius:10px;min-height:44px;font-size:13px;padding:10px 17px}
+.wm-footer .btn.primary,.wm-footer button[type=submit]{background:var(--wr-crm-accent,var(--wm-blue,#075cf5));border-color:var(--wr-crm-accent,var(--wm-blue,#075cf5))}
+.wm-tabs{margin:0;padding:0 24px;background:#fff;border-bottom:1px solid #e2eaf5}
+.wm-tab{padding:15px 18px}
+.wm-dialog .wr-form-section:not(.wm-section),.wm-dialog .wr-detail-section:not(.wm-section){padding:17px 19px;background:#fff;border:1px solid #e1e8f4;border-radius:14px;margin:0 0 14px}
+.wm-dialog .wr-form-section:not(.wm-section)>strong{color:#133362}
+.wm-dialog .wr-form-section:not(.wm-section)>.sub{line-height:1.6}
+.wm-dialog .tablewrap{border-radius:12px;overflow-x:auto}
+.wm-dialog .tablewrap th{background:#f6f8fd}
+.wm-dialog .wm-scroll>.sub{color:#7185a4;line-height:1.6}
+.wm-dialog .wm-scroll>.wr-form-section:only-child{margin:0}
+@media(max-width:720px){
+ .wm-overlay{padding:8px}
+ .wm-dialog,.wm-dialog:not(.wm-compact){border-radius:16px;width:100%;height:calc(100dvh - 16px);max-height:calc(100dvh - 16px)}
+ .wm-dialog.wm-compact{height:auto;max-height:calc(100dvh - 16px)}
+ .wm-header{padding:23px 18px 17px}
+ .wm-heading{font-size:25px;margin-right:38px}
+ .wm-description{margin-right:12px}
+ .wm-close{top:15px;right:14px;width:37px;height:37px}
+ .wm-scroll{padding:17px 15px 24px}
+ .wm-section{padding:17px;border-radius:13px}
+ .wm-section-head{grid-template-columns:40px minmax(0,1fr);gap:11px}
+ .wm-section-symbol{width:40px;height:40px}
+ .wm-section .wm-grid,.wm-form .wm-section>.wm-grid{grid-template-columns:1fr;gap:13px}
+ .wm-footer{padding:13px 15px}
+ .wm-footer button{min-width:90px}
+ .wm-tabs{padding:0 9px}
+}

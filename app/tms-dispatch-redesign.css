@@ -1,0 +1,52 @@
+/* WorkRelief TMS / Dispatch — operational workspace redesign */
+body[data-wr-app="tms"]{background:#f3f6fa!important;color:#19314d;font:14px/1.5 Inter,system-ui,-apple-system,"Segoe UI",sans-serif!important}
+body[data-wr-app="tms"] .tms-content>main{max-width:1450px!important;padding:30px 32px 88px!important}
+body[data-wr-app="tms"] .tms-sidebar{background:#fff!important}
+body[data-wr-app="tms"] .tms-topbar{min-height:74px!important}
+.dispatch-eyebrow{font-size:10px;color:#6481a4;letter-spacing:.14em;font-weight:850;margin-bottom:7px}
+.dispatch-page-title{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:12px}
+.dispatch-page-title h1{font-size:33px;line-height:1.16;margin:0 0 6px;letter-spacing:-.035em;color:#142e4d}
+.dispatch-page-title p{color:#6c829f;font-size:13px;margin:0}
+.dispatch-create{background:#1768eb;color:white!important;padding:11px 17px;border-radius:8px;white-space:nowrap;font-size:12px;font-weight:800;box-shadow:0 4px 12px #1768eb22}
+#workspace{color:#758aa6;font-size:12px;margin:0 0 22px}
+#operationsPanel{border:1px solid #dbe5f1;padding:0;background:#fff;box-shadow:0 5px 18px #18325308;overflow:hidden}
+#operationsPanel .board-top{padding:20px 22px;border-bottom:1px solid #e6edf5}
+#operationsPanel h2{font-size:17px;margin:0;color:#182f4d;letter-spacing:-.02em}
+.dispatch-hint{font-size:12px;color:#8496ae;margin:5px 0 0}
+.board-actions{gap:9px}
+.board-actions input{width:280px;border:1px solid #d4e0ef;background:#fff;padding:10px 12px;font-size:12px;border-radius:8px}
+.board-actions button{background:#fff;color:#365374;border:1px solid #d4e0ef;padding:10px 14px;font-size:12px;border-radius:8px}
+#dispatchMetrics{margin:0;padding:17px 20px 19px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;background:#fff}
+#dispatchMetrics span{background:#f9fbfe;border:1px solid #dfe8f3;border-radius:9px;color:#345171;font-size:12px;padding:16px;min-height:60px}
+#dispatchBoard{margin:0;display:grid;grid-template-columns:repeat(4,minmax(235px,1fr));gap:13px;min-width:1000px;padding:18px;background:#f9fbfd;border-top:1px solid #e9eef5;overflow:visible}
+#operationsPanel{overflow-x:auto}
+.dispatch-lane{background:#f0f4f9;border:1px solid #e0e7f1;border-radius:10px;padding:12px;min-height:305px}
+.dispatch-lane h3{font-size:12px;color:#3b5777;margin:0 0 12px;padding:5px 5px 13px;border-bottom:1px solid #dbe5f0;display:flex;align-items:center;gap:7px}
+.dispatch-lane h3:before{content:"";width:8px;height:8px;border-radius:50%;background:#d9a152}
+.dispatch-lane:nth-child(2) h3:before{background:#816ce0}
+.dispatch-lane:nth-child(3) h3:before{background:#3289e6}
+.dispatch-lane:nth-child(4) h3:before{background:#27a47b}
+.dispatch-card{margin:0 0 10px;background:#fff;border:1px solid #dbe4f0;border-radius:9px;padding:15px;box-shadow:0 3px 9px #142b4508}
+.dispatch-card strong{font-size:15px;color:#1b3654}
+.dispatch-card p{font-size:12px;color:#516984;line-height:1.5}
+.dispatch-card small{color:#8497ae}
+.dispatch-card a{font-weight:800}
+.dispatch-card button{border-radius:7px}
+.dispatch-empty{text-align:center;padding:25px 9px;color:#8396ac}
+#message{margin:13px 0}
+.card.table{border:1px solid #dce6f2;box-shadow:0 4px 15px #1e406305}
+.card.table h2{font-size:16px;color:#193452;margin:0 0 10px}
+.card.table th{background:#f9fbfd;color:#6e86a2;font-size:10px;text-transform:uppercase;letter-spacing:.055em}
+.card.table td{font-size:12px;color:#3a5571}
+.card.table button{background:#eaf2ff;color:#1868d8;border:1px solid #cee0fc;border-radius:7px;font-size:11px}
+.tms-collapsible{margin-top:19px!important;background:#fff!important}
+.tms-collapsible>summary{color:#285078!important;font-size:13px!important}
+.tms-collapsible>.grid{background:#f9fbfd;padding:16px!important}
+.grid .card{padding:18px;box-shadow:none}
+.grid h2{font-size:15px;margin:0 0 14px;color:#183553}
+.grid label{font-size:11px;color:#486482}
+.grid input,.grid select{border:1px solid #d0ddef;background:white;font-size:12px}
+.grid button{font-size:12px}
+@media(max-width:1100px){#dispatchMetrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:850px){body[data-wr-app="tms"] .tms-content>main{padding:22px 16px 68px!important}}
+@media(max-width:540px){.dispatch-page-title h1{font-size:27px}#dispatchMetrics{padding:12px;gap:8px}#dispatchMetrics span{padding:11px;font-size:11px;min-height:50px}#operationsPanel .board-top{padding:15px}.board-actions{width:100%}.board-actions input{width:100%}#dispatchBoard{padding:12px}.dispatch-create{width:100%;text-align:center}}

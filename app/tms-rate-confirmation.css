@@ -1,0 +1,35 @@
+*{box-sizing:border-box}body{background:#f3f7fd;color:#183452;font:14px/1.5 Inter,Arial,sans-serif;margin:0}.container{max-width:1450px;padding:30px 24px;margin:auto}.toolbar{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:18px}.toolbar a{color:#1768f5;text-decoration:none}.notice{background:#fff7e9;border:1px solid #e9d4ad;padding:12px;border-radius:9px}.paper{background:#fff;padding:42px;border-radius:12px;border:1px solid #dde7f2;max-width:1000px;margin:auto}.dochead{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #e3e9f3;padding-bottom:22px}.logo{width:160px}.paper h1{font-size:27px;margin:25px 0}.paper h2{font-size:17px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.item{display:grid;gap:6px;padding:12px 0;border-bottom:1px solid #eaf0f6}.item span,.fine{font-size:12px;color:#74849c}.actions{display:flex;justify-content:center;gap:10px;margin:22px}.actions button,.emailbox button{background:#1768f5;color:white;border:0;border-radius:8px;padding:12px 18px;cursor:pointer}.emailbox{max-width:650px;margin:0 auto 30px;background:#fff;border:1px solid #d9e5f3;border-radius:12px;padding:22px;display:grid;gap:12px}.emailbox[hidden]{display:none}.emailbox input{padding:12px;border:1px solid #cbd9e8;border-radius:8px}.email-link{color:#1768f5;font-weight:700}@media(max-width:600px){.paper{padding:20px}.grid{grid-template-columns:1fr}.toolbar{flex-direction:column}.actions{flex-wrap:wrap}}@media print{body{background:white}.toolbar,.notice,.actions,.emailbox{display:none!important}.container{max-width:none;padding:0}.paper{border:0;max-width:none;padding:0}}
+
+/* Unified WorkRelief TMS rate confirmation stationery */
+:root{--rate-accent:#A32942;--rate-accent-dark:#801E33;--rate-line:#e4e9ef}
+body{background:#f3f5f9;color:#172941}
+.toolbar a,.email-link{color:var(--rate-accent)}
+.paper{border:1px solid #dee3ec;box-shadow:0 14px 42px #1f2d4612;padding:0 42px 34px;overflow:hidden}
+.rate-brand-band{margin:0 -42px 24px;background:var(--rate-accent);color:#fff;padding:11px 42px;display:flex;justify-content:space-between;gap:15px;align-items:center;font-size:10px;font-weight:850;letter-spacing:.1em}
+.rate-brand-type{font-size:10px}
+.dochead{border-bottom:2px solid var(--rate-accent);padding:0 0 22px;align-items:flex-start}
+.dochead .logo{width:190px;max-height:65px;object-fit:contain;object-position:left center}
+.rate-doc-meta{display:grid;text-align:right;gap:5px}
+.rate-doc-meta strong{color:var(--rate-accent-dark);font-size:14px;letter-spacing:.06em}
+.rate-doc-meta span{font-size:12px;color:#65748b}
+.paper h1{font-size:25px;color:#172941;margin:24px 0 12px}
+.paper h2{font-size:15px;color:var(--rate-accent-dark);margin:28px 0 10px;padding-bottom:8px;border-bottom:1px solid var(--rate-line)}
+.item{padding:11px 10px;border-bottom:1px solid var(--rate-line)}
+.item span{font-size:10px;text-transform:uppercase;letter-spacing:.06em;font-weight:700}
+.item strong{font-size:13px;color:#1b2d49}
+.rate-instructions{padding:14px;border:1px solid var(--rate-line);background:#fafbfd;min-height:42px;white-space:pre-wrap}
+.rate-terms p{font-size:12px;color:#42536e;line-height:1.7}
+.rate-signatures{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:40px;margin:65px 0 34px}
+.rate-signature{display:grid;gap:5px}
+.rate-sign-line{height:1px;background:#53647a;margin-bottom:6px}
+.rate-signature strong{font-size:12px;color:#1b2d49}
+.rate-signature span{font-size:11px;color:#6b7b91}
+.rate-footer{border-top:2px solid var(--rate-accent);padding-top:12px;display:flex;justify-content:space-between;gap:15px;align-items:center;font-size:10px;color:#738197;letter-spacing:.04em}
+.rate-footer strong{color:var(--rate-accent-dark)}
+.actions button{background:var(--rate-accent)}
+@media(max-width:600px){.paper{padding:0 20px 25px}.rate-brand-band{margin:0 -20px 20px;padding:12px 20px}.rate-signatures{grid-template-columns:1fr;gap:40px}.rate-doc-meta{text-align:left}.dochead{gap:15px;flex-wrap:wrap}.rate-footer{flex-wrap:wrap}}
+@media print{@page{size:letter;margin:14mm}.paper{box-shadow:none;overflow:visible;padding:0}.rate-brand-band{margin:0 0 20px;padding:10px 14px;background:var(--rate-accent)!important;color:white!important;print-color-adjust:exact;-webkit-print-color-adjust:exact}.rate-signatures,.rate-terms,.rate-footer{break-inside:avoid}.item{break-inside:avoid}}
+
+.rate-broker-identity{display:grid;gap:3px;font-size:11px;color:#57667c;padding:16px 0 0;white-space:pre-line}.rate-broker-identity strong{font-size:14px;color:#801E33}.rate-custom-terms{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.65;color:#25364e!important;font-size:12px!important}.rate-footer span{white-space:pre-line}
+
+.rate-lines{width:100%;border-collapse:collapse;margin:16px 0;font-size:12px}.rate-lines th,.rate-lines td{padding:10px;border-bottom:1px solid #e4e9ef;text-align:left}.rate-lines th{background:#f8f3f5;color:#801E33}.rate-total{text-align:right}.rate-broker-identity span{white-space:pre-line}

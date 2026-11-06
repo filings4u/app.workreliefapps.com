@@ -1,0 +1,111 @@
+<!doctype html><html lang="en"><head><link rel="icon" type="image/png" href="../assets/img/fav.png"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Purchase Apps | workrelief</title><style>
+:root{font-family:Inter,ui-sans-serif,system-ui,Arial,sans-serif;color:#11264b;background:#f5f8fe;--blue:#1768f5;--line:#dce6f6;--muted:#6e83a3}
+*{box-sizing:border-box}body{margin:0;background:#f5f8fe}header{background:white;border-bottom:1px solid var(--line)}
+.top-inner{width:min(1450px,100%);margin:auto;padding:17px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.top-brand{display:flex;align-items:center;gap:15px;color:#1460ec;font-weight:800;font-size:13px}
+.top-brand img{width:155px;max-height:47px;object-fit:contain}.top-brand span{border-left:1px solid var(--line);padding-left:15px}
+a{color:#1768f5;text-decoration:none;font-weight:700}a:hover{text-decoration:underline}
+main{max-width:1450px;margin:0 auto;padding:37px 24px 145px}
+.eyebrow{color:#1768f5;font-size:11px;letter-spacing:1.8px;font-weight:850}
+.hero{display:flex;align-items:flex-end;justify-content:space-between;gap:26px;padding-bottom:27px}
+h1{font-size:clamp(34px,4vw,46px);letter-spacing:-1.6px;line-height:1.12;margin:9px 0 12px;color:#0c2047}
+.intro{font-size:15px;color:var(--muted);line-height:1.6;margin:0}.hero .intro{max-width:750px}
+.hero-meta{font-size:12px;color:#627b9f;background:white;border:1px solid var(--line);border-radius:999px;padding:11px 15px;white-space:nowrap}
+.market-layout{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:23px;align-items:start}
+.market-primary{min-width:0}.panel{background:#fff;border:1px solid var(--line);border-radius:15px;padding:25px;box-shadow:0 4px 18px #1b447209}
+.panel h2{font-size:20px;letter-spacing:-.4px;margin:0 0 8px;color:#0d234c}
+.panel-head{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:20px}
+.panel-head p{margin:0;font-size:13px;color:var(--muted)}
+.pricing-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:23px}
+.plan-example{border:1px solid #dce6f5;border-radius:13px;background:#fff;padding:17px;min-width:0}
+.plan-example.highlight{border-color:#82b0ff;background:#edf5ff}
+.plan-example small{display:block;font-size:11px;font-weight:800;color:#6581a9;letter-spacing:.05em}
+.plan-example strong{display:block;font-size:27px;letter-spacing:-.9px;margin:8px 0 2px;color:#0f2c61}
+.plan-example span{font-size:11px;color:#768aa7}
+.section-title{font-size:20px;letter-spacing:-.35px;margin:5px 0 6px}
+.section-sub{font-size:13px;color:#788aaa;margin:0 0 20px;line-height:1.55}
+.apps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:0}
+.app{--app-accent:#1768f5;background:#fff;border:1px solid #dce6f5;border-radius:13px;overflow:hidden;display:flex;flex-direction:column;padding:18px 18px 16px;min-width:0;position:relative;transition:border-color .15s,background .15s}
+.app:before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:var(--app-accent)}
+.app.selected{background:#f5f9ff;border-color:#8db7fa}.app.owned{background:#fafcff}
+.app-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.app-icon{width:39px;height:39px;display:grid;place-items:center;background:color-mix(in srgb,var(--app-accent) 12%,white);border-radius:10px;color:var(--app-accent);font-size:18px;font-weight:800}
+.app h3{font-size:17px;margin:15px 0 6px;letter-spacing:-.35px}
+.pill{display:inline-flex;align-items:center;padding:5px 9px;border-radius:50px;background:#edf3fc;color:#57729a;font-size:10px;font-weight:750}
+.owned .pill{background:#e3f7ed;color:#087c50}
+.app-description{font-size:12px;line-height:1.5;color:#7b8ba7;margin:8px 0 17px;flex:1}
+.app label{display:flex;gap:9px;align-items:center;border-top:1px solid #e7eef8;padding-top:13px;margin-top:auto;font-size:12px;font-weight:700;color:#1d477e;cursor:pointer}
+.app label+label{margin-top:10px}.app input[type=checkbox]{width:16px;height:16px;accent-color:#1768f5}
+.addon-card{margin-bottom:15px}.addon-price{font-size:28px;font-weight:850;letter-spacing:-1px;margin:14px 0 7px;color:#125bf0}
+.addon-price span{font-size:12px;font-weight:600;letter-spacing:0;color:#7489a8}
+.addon-card .intro{font-size:12px}.seat-input-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:19px 0;border:1px solid var(--line);border-radius:11px;padding:11px 12px}
+.seat-input-row label{font-size:12px;font-weight:750;color:#1e365b}.seat-input-row input{max-width:95px;min-height:39px;padding:7px 9px;text-align:center;border:1px solid #c6d8f3;border-radius:8px;font:inherit;color:#10284f}
+#seat-current{font-size:12px;color:#5e7698;margin:12px 0 0}
+.info-note{font-size:11px;color:#7589a8;line-height:1.6;margin:12px 0 0}
+.summary{position:sticky;bottom:14px;z-index:10;background:#fff;border:1px solid #cfdef4;border-radius:14px;padding:17px 21px;box-shadow:0 10px 35px #142e5b26;display:flex;align-items:center;gap:25px;margin-top:22px}
+.summary-count{flex:1;min-width:0}.summary-count strong{font-size:14px;color:#10294f}.summary-count p{font-size:11px;color:#7589a5;margin:5px 0 0}
+.summary label{display:grid;gap:6px;font-size:11px;color:#7387a5;font-weight:700}
+.summary select{min-height:40px;border:1px solid #cadcf5;border-radius:9px;background:white;padding:8px 12px;color:#10284f}
+.action{border:1px solid #1768f5;border-radius:10px;background:#1768f5;color:white;padding:12px 17px;font:inherit;font-size:13px;font-weight:800;cursor:pointer;white-space:nowrap}
+.action:disabled{opacity:.45;cursor:not-allowed}.secondary-link{padding:10px 12px;color:#1768f5;font-size:13px}
+#status{font-size:12px;color:#6b82a5;margin:0 0 16px}.hidden{display:none!important}
+@media(max-width:1180px){.market-layout{grid-template-columns:minmax(0,1fr) 280px}.apps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:850px){.market-layout{grid-template-columns:1fr}.addons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}.addons .addon-card{margin:0}.pricing-strip{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:620px){main{padding:26px 14px 120px}.top-inner{padding:13px 14px}.top-brand img{width:120px}.hero{display:block}.hero-meta{display:inline-block;margin-top:18px}.apps,.addons{grid-template-columns:1fr}.panel{padding:18px}.summary{flex-wrap:wrap;bottom:8px;gap:12px;padding:14px}.summary-count{flex-basis:100%}.summary .action{width:100%}.pricing-strip{gap:9px}.plan-example{padding:12px}.plan-example strong{font-size:23px}}
+
+/* Marketplace 2.0 — storefront experience */
+:root{--store-ink:#0c2349;--store-muted:#7084a6}
+body{background:#f4f7fd;color:var(--store-ink)}
+.top-inner{max-width:1450px;padding:17px 29px}
+main{max-width:1450px;padding:28px 29px 145px}
+.hero{position:relative;padding:35px 36px;margin-bottom:25px;border:1px solid #dce7fa;border-radius:22px;background:radial-gradient(circle at 88% 16%,#dcecff 0,transparent 34%),linear-gradient(120deg,#fff 15%,#eef5ff 100%);overflow:hidden;align-items:center}
+.hero:after{content:"✦";position:absolute;right:9%;top:10%;font-size:65px;color:#c9dcff;pointer-events:none}
+.hero h1{font-size:clamp(35px,4.3vw,54px);margin:10px 0 15px;max-width:680px}
+.hero .intro{max-width:650px}
+.hero-meta{position:relative;z-index:1;border-color:#d1e0fa;box-shadow:0 6px 22px #224a8c0b}
+.pricing-strip{gap:14px;margin-bottom:27px}
+.plan-example{padding:20px 21px;border-radius:16px;box-shadow:0 6px 24px #193d7810}
+.plan-example.highlight{background:linear-gradient(140deg,#e8f1ff,#f5f9ff)}
+.market-layout{grid-template-columns:minmax(0,1fr) 300px;gap:22px}
+.panel{border-radius:18px;padding:24px;box-shadow:0 8px 30px #17335c0a}
+.market-primary>.panel{padding:26px}
+.apps{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.app{border-radius:17px;padding:21px;min-height:245px;box-shadow:0 5px 18px #16366f0a;transition:transform .18s,box-shadow .18s,border-color .18s}
+.app:hover{transform:translateY(-3px);box-shadow:0 15px 30px #17396919;border-color:color-mix(in srgb,var(--app-accent) 36%,#dce6f5)}
+.app[hidden]{display:none!important}.app.selected{box-shadow:0 0 0 2px var(--app-accent),0 12px 28px #17396914;background:#f8fbff}
+.app.owned{background:#f8faff}
+.app:before{height:5px}
+.app-icon{width:49px;height:49px;border-radius:15px;font-size:22px}
+.app h3{font-size:19px;margin:18px 0 5px}
+.app-description{font-size:13px;line-height:1.6;margin-bottom:22px;color:#697f9e}
+.app label{padding-top:14px;font-size:13px}
+.app label:has(input:checked){color:var(--app-accent)}
+.app label+label{margin-top:8px}
+.app .pill{font-size:10px;padding:6px 10px}
+.app .store-active{font-size:12px;font-weight:700;color:#16845e;display:flex;align-items:center;gap:6px;margin-top:auto;border-top:1px solid #e7eef8;padding-top:13px}
+.app .store-active:before{content:"✓";display:grid;place-items:center;width:19px;height:19px;border-radius:50%;background:#daf7e8;color:#008452}
+.store-toolbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin:0 0 22px}
+.store-filters{display:flex;flex-wrap:wrap;gap:7px}
+.store-filter{padding:9px 14px;border:1px solid #d9e4f4;border-radius:999px;background:white;color:#45618a;font:700 12px inherit;cursor:pointer}
+.store-filter.active{background:#1768f5;border-color:#1768f5;color:#fff}
+.store-search{min-width:190px;min-height:39px;border:1px solid #d1e0f4;background:#fff;border-radius:11px;padding:9px 13px;font:inherit;font-size:13px;flex:1;max-width:300px}
+.store-search:focus{outline:3px solid #1768f52b;border-color:#1768f5}
+.store-empty{grid-column:1/-1;text-align:center;padding:42px 12px;color:#667d9e}
+.addons .panel{position:relative;overflow:hidden}
+.addons .panel:before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:#1768f5}
+.addon-price{margin-top:18px}
+.summary{bottom:12px;border-radius:17px;box-shadow:0 16px 44px #17396925;padding:18px 22px}
+.summary-count strong{font-size:15px}
+.action{border-radius:12px;padding:14px 20px}
+@media(max-width:1180px){.market-layout{grid-template-columns:minmax(0,1fr) 280px}.apps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:850px){.market-layout{grid-template-columns:1fr}.addons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}.addons .addon-card{margin:0}.pricing-strip{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:620px){main{padding:17px 14px 125px}.hero{padding:25px 21px;border-radius:18px}.hero:after{display:none}.hero h1{font-size:36px}.apps,.addons{grid-template-columns:1fr}.market-primary>.panel{padding:17px}.store-search{max-width:none;width:100%;flex-basis:100%}.app{min-height:0}.summary{bottom:6px}}
+
+</style><script defer src="workspace-branding.js"></script><link rel="stylesheet" href="workrelief-shell.css"></head><body><header><div class="top-inner"><div class="top-brand"><img src="../assets/img/logo.png" alt="workrelief"><span>APPLICATION MARKETPLACE</span></div><a id="back" class="secondary-link" href="crm.html">← Back to CRM</a></div></header>
+<main><div class="hero"><div><div class="eyebrow">WORKRELIEF · WORKSPACE APPLICATIONS</div><h1>Build your workspace.</h1><p class="intro">Add the applications your team needs, keep everything you already own, and expand as your business grows.</p></div><span class="hero-meta">19 connected applications · One workspace</span></div>
+<div class="pricing-strip" aria-label="Published WorkRelief pricing examples"><div class="plan-example"><small>GET STARTED · 1 APP</small><strong>$25</strong><span>per month</span></div><div class="plan-example"><small>GROW · 5 APPS</small><strong>$100</strong><span>per month</span></div><div class="plan-example"><small>SCALE · 10 APPS</small><strong>$170</strong><span>per month</span></div><div class="plan-example highlight"><small>COMPLETE · ALL 19</small><strong>$225</strong><span>per month · $2,500 yearly</span></div></div>
+<div class="market-layout"><div class="market-primary"><section class="panel"><div class="panel-head"><div><h2>Explore applications</h2><p>Select apps to add. Purchased apps stay available in your workspace.</p></div><a class="secondary-link" href="../pricing.html" target="_blank" rel="noopener noreferrer">View pricing ↗</a></div><div class="store-toolbar"><div class="store-filters" aria-label="Filter applications"><button type="button" class="store-filter active" data-store-filter="all">All apps</button><button type="button" class="store-filter" data-store-filter="available">Available</button><button type="button" class="store-filter" data-store-filter="owned">Purchased</button></div><input class="store-search" id="store-search" type="search" placeholder="Search applications…" aria-label="Search applications"></div><p id="status" role="status">Checking your account and purchases…</p><div class="apps" id="apps"></div></section></div>
+<aside class="addons"><section class="panel addon-card" id="team"><div class="eyebrow">OPTIONAL ADD-ON</div><h2 style="margin-top:10px">Team access</h2><div class="addon-price">$5.50 <span>/ additional seat / month</span></div><p class="intro">The workspace owner is included. Purchase seats to invite teammates.</p><p id="seat-current">Checking your existing seats…</p><div class="seat-input-row"><label for="seat-quantity">Add seats</label><input id="seat-quantity" type="number" min="0" max="100" step="1" value="0"></div><p class="info-note">Each paid seat unlocks an invitation after payment is confirmed.</p></section>
+<section class="panel addon-card"><div class="eyebrow">PERSONALIZE YOUR TOOLS</div><h2 style="margin-top:10px">White Label</h2><div class="addon-price">From $10 <span>/ month</span></div><p class="intro">Apply your company identity to eligible apps. Multi-app bundle discounts are available.</p><p class="info-note">Select White Label on an app card you own or are adding. Checkout determines the actual price.</p></section>
+<section class="panel addon-card"><div class="eyebrow">PRICING INFORMATION</div><h2 style="margin-top:10px">Flexible plans</h2><p class="intro">The examples above are from the public pricing page. Pricing for additional apps, bundles and annual billing is calculated during checkout.</p><p class="info-note">Your existing purchases remain active. You won't be asked to buy an app you already own.</p></section></aside></div>
+<div id="summary" class="summary hidden"><label>Billing frequency<select id="billing-frequency"><option value="monthly">Monthly</option><option value="annual">Yearly</option></select></label><div class="summary-count"><strong id="selected">No new apps selected</strong><p>Your current purchased applications will remain active. Review the final total at checkout.</p></div><button class="action" id="buy" disabled>Continue to checkout →</button></div></main><script type="module">import{createClient}from'https://esm.sh/@supabase/supabase-js@2';const sb=createClient('https://cqzwoskpgefacghdnuyz.supabase.co','sb_publishable_CoIoX7Pinqd2o4kJwqCTqA_RKmePPZt');const descriptions={crm:'Manage customer relationships and sales.',scheduling:'Appointments and team calendars.',forms:'Capture information with smart forms.',desk:'Customer support and service tickets.',hr:'People operations in one place.',training:'Courses and employee learning.',compliance:'Stay organized with compliance.',time:'Track time and attendance.',tasks:'Manage work and follow-ups.',projects:'Projects from planning to delivery.',chat:'Team communication.',docs:'Create and organize documents.',sign:'Electronic signing workflows.',billing:'Invoices and billing workflows.',field:'Coordinate teams in the field.',inventory:'Keep track of supplies and stock.',assets:'Manage business equipment.',workflow:'Automate repetitive processes.',ai:'AI assistance across your tools.'};const catalog=[["crm","CRM","#1768F5"],["scheduling","Scheduling","#12B8B1"],["forms","Forms","#FF8419"],["desk","Desk","#ED3192"],["hr","HR","#8839EC"],["training","Training","#247BFF"],["compliance","Compliance","#10C66E"],["time","Time","#8A3CF6"],["tasks","Tasks","#E59A32"],["projects","Projects","#4C77D9"],["chat","Chat","#7A4FDD"],["docs","Docs","#5B77A6"],["sign","Sign","#E68C45"],["billing","Billing","#3F94CC"],["field","Field","#8A69D4"],["inventory","Inventory","#C77842"],["assets","Assets","#3B81AC"],["workflow","Workflow","#8467D0"],["ai","AI","#9457E8"]],$=id=>document.getElementById(id);const qp=new URLSearchParams(location.search);let wid='',ent=[];let storeFilter='all';const applyStoreFilters=()=>{const search=($('store-search')?.value||'').trim().toLowerCase();let count=0;document.querySelectorAll('#apps .app').forEach(card=>{const show=(storeFilter==='all'||card.dataset.storeStatus===storeFilter)&&(!search||card.dataset.storeSearch.includes(search));card.hidden=!show;if(show)count++;});let empty=$('store-empty');if(!empty){empty=document.createElement('p');empty.id='store-empty';empty.className='store-empty';$('apps').append(empty);}empty.hidden=count!==0;empty.textContent='No applications match your search.';};document.querySelectorAll('[data-store-filter]').forEach(btn=>btn.addEventListener('click',()=>{storeFilter=btn.dataset.storeFilter;document.querySelectorAll('[data-store-filter]').forEach(b=>b.classList.toggle('active',b===btn));applyStoreFilters();}));$('store-search').addEventListener('input',applyStoreFilters);const selections=()=>({apps:[...document.querySelectorAll('[data-app]:checked')].map(x=>x.dataset.app),white:[...document.querySelectorAll('[data-white]:checked')].map(x=>x.dataset.white),seats:Number($('seat-quantity').value)||0});function refresh(){const s=selections();$('selected').textContent=s.apps.length+' new apps · '+s.white.length+' White Label upgrades · '+s.seats+' team seats';$('buy').disabled=!s.apps.length&&!s.white.length&&!s.seats;}try{const{data:{user}}=await sb.auth.getUser();if(!user){location.replace('login.html?next='+encodeURIComponent('app/purchase-apps.html'+location.search));}else{const{data:m,error:me}=await sb.from('workspace_members').select('workspace_id,role').eq('user_id',user.id);if(me)throw me;const member=m?.find(x=>x.workspace_id===qp.get('workspace'))||m?.[0];if(!member)throw Error('No workspace available');if(member.role!=='owner'){location.replace('crm-team-workspace.html?workspace='+member.workspace_id);}else{wid=member.workspace_id;$('back').href='crm.html?workspace='+encodeURIComponent(wid);const{data:rows,error}=await sb.from('wr_application_entitlements').select('application_code,white_label_enabled,billing_state').eq('workspace_id',wid);if(error)throw error;ent=rows||[];for(const [id,name,color]of catalog){const owned=ent.find(e=>e.application_code===id&&['active','trialing'].includes(e.billing_state));const card=document.createElement('div');card.className='app'+(owned?' owned':'');card.style.setProperty('--app-accent',color);card.dataset.storeStatus=owned?'owned':'available';card.dataset.storeSearch=(name+' '+(descriptions[id]||'')).toLowerCase();const top=document.createElement('div');top.className='app-head';const icon=document.createElement('div');icon.className='app-icon';icon.textContent=name.slice(0,1);const tag=document.createElement('span');tag.className='pill';tag.textContent=owned?'✓ Purchased':'Available';top.append(icon,tag);card.append(top);const title=document.createElement('h3');title.textContent=name;card.append(title);const description=document.createElement('p');description.className='app-description';description.textContent=descriptions[id]||'A connected workrelief application.';card.append(description);if(!owned){const l=document.createElement('label'),input=document.createElement('input');input.type='checkbox';input.dataset.app=id;input.addEventListener('change',()=>{card.classList.toggle('selected',input.checked);refresh()});l.append(input,document.createTextNode('Add '+name));card.append(l);}if(owned&&!owned.white_label_enabled){const l=document.createElement('label'),input=document.createElement('input');input.type='checkbox';input.dataset.white=id;input.disabled=false;input.addEventListener('change',refresh);l.append(input,document.createTextNode('Add White Label'+''));card.append(l);}else{const p=document.createElement('p');p.textContent='White Label active';p.className='store-active';card.append(p);}const appBox=card.querySelector('[data-app]'),whiteBox=card.querySelector('[data-white]');if(appBox&&(qp.get('apps')||'').split(',').includes(id)){appBox.checked=true;card.classList.add('selected');}if(whiteBox&&(qp.get('white')||'').split(',').includes(id)&&(owned||appBox?.checked)){whiteBox.checked=true;whiteBox.disabled=false;}if(appBox&&whiteBox)appBox.addEventListener('change',()=>{whiteBox.disabled=!appBox.checked;if(!appBox.checked)whiteBox.checked=false;refresh()});$('apps').append(card);}refresh();applyStoreFilters();$('status').textContent='Browse apps and add new tools to your workspace';$('summary').classList.remove('hidden');const {data:seats}=await sb.from('wr_workspace_team_entitlements').select('paid_seats').eq('workspace_id',wid).maybeSingle();$('seat-current').textContent=(seats?.paid_seats||0)+' seats already purchased';$('seat-quantity').max=String(Math.max(0,100-(seats?.paid_seats||0)));$('seat-quantity').addEventListener('input',refresh);$('buy').onclick=()=>{const s=selections();const url=new URL('checkout-apps.html',location.href);url.searchParams.set('workspace',wid);url.searchParams.set('apps',s.apps.join(','));url.searchParams.set('white',s.white.join(','));url.searchParams.set('seats',String(s.seats));url.searchParams.set('cycle',$('billing-frequency').value);url.searchParams.set('return_to','purchase-apps.html');location.href=url.toString()};}}}catch(e){$('status').textContent=e.message||'Unable to load purchases';}</script></body></html>

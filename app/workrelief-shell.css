@@ -1,0 +1,30 @@
+/* WorkRelief shared app shell foundation.
+   Use data-wr-app on the body to theme app-specific views without changing layout. */
+:root{--wr-shell-blue:#1768f5;--wr-shell-bg:#f4f7fd;--wr-shell-surface:#fff;--wr-shell-ink:#102448;--wr-shell-muted:#7084a6;--wr-shell-border:#dae5f4;--wr-shell-radius:16px;--wr-app-accent:var(--wr-shell-blue)}
+body[data-wr-app="crm"]{--wr-app-accent:#1768f5}
+body[data-wr-app="scheduling"]{--wr-app-accent:#12b8b1}
+body[data-wr-app="forms"]{--wr-app-accent:#ff8419}
+body[data-wr-app="desk"]{--wr-app-accent:#ed3192}
+body[data-wr-app="hr"]{--wr-app-accent:#8839ec}
+body[data-wr-app="training"]{--wr-app-accent:#247bff}
+body[data-wr-app="compliance"]{--wr-app-accent:#10c66e}
+body[data-wr-app="time"]{--wr-app-accent:#8a3cf6}
+body[data-wr-app="tasks"]{--wr-app-accent:#e59a32}
+body[data-wr-app="projects"]{--wr-app-accent:#4c77d9}
+body[data-wr-app="chat"]{--wr-app-accent:#7a4fdd}
+body[data-wr-app="docs"]{--wr-app-accent:#5b77a6}
+body[data-wr-app="sign"]{--wr-app-accent:#e68c45}
+body[data-wr-app="billing"]{--wr-app-accent:#3f94cc}
+body[data-wr-app="field"]{--wr-app-accent:#8a69d4}
+body[data-wr-app="inventory"]{--wr-app-accent:#c77842}
+body[data-wr-app="assets"]{--wr-app-accent:#3b81ac}
+body[data-wr-app="workflow"]{--wr-app-accent:#8467d0}
+body[data-wr-app="ai"]{--wr-app-accent:#9457e8}
+.wr-shell-card{background:var(--wr-shell-surface);border:1px solid var(--wr-shell-border);border-radius:var(--wr-shell-radius)}
+.wr-shell-accent{color:var(--wr-app-accent)}
+.wr-shell-action{background:var(--wr-app-accent);color:#fff;border-color:var(--wr-app-accent)}
+.wr-shell-action:focus-visible{outline:3px solid color-mix(in srgb,var(--wr-app-accent) 35%,transparent);outline-offset:2px}
+.wr-shell-workspace{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:640px){.wr-shell-card{border-radius:13px}}
+
+.wr-app-identity{display:flex;align-items:center;gap:12px;margin:15px 3px 20px;font-weight:800;font-size:18px;color:var(--wr-shell-ink)}.wr-app-identity-icon{display:grid;place-items:center;width:43px;height:43px;flex:0 0 43px;border-radius:13px;background:color-mix(in srgb,var(--wr-app-accent) 14%,white);color:var(--wr-app-accent);font-size:22px}.wr-app-identity-name{font-size:18px;letter-spacing:-.35px}

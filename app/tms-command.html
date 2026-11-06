@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TMS Command Center | WorkRelief</title><link rel="stylesheet" href="workrelief-shell.css">
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f4f7fc;color:#162b4b;font:14px/1.5 Inter,system-ui,Arial,sans-serif}
+main{max-width:1450px;margin:auto;padding:34px 30px 80px}h1{font-size:34px;letter-spacing:-.045em;margin:4px 0}p{color:#637996}a{color:#1266f1;text-decoration:none;font-weight:700}button,input,select{font:inherit}
+.heading{display:flex;justify-content:space-between;align-items:end;gap:18px;flex-wrap:wrap;margin-bottom:24px}.eyebrow{color:#1465ee;font-size:11px;letter-spacing:.15em;font-weight:800}.button{display:inline-flex;background:#1768f5;color:#fff;padding:11px 17px;border-radius:9px}
+.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:18px}.metric,.panel{background:#fff;border:1px solid #dde6f2;border-radius:15px}.metric{padding:20px}.metric small{font-size:12px;color:#687e9d;font-weight:700}.metric strong{display:block;font-size:29px;margin-top:7px;letter-spacing:-.04em}.metric span{font-size:11px;color:#6d819e}
+.panels{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(270px,1fr);gap:17px}.panel{padding:21px;min-width:0}.panel h2{font-size:19px;margin:0}.panel-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:16px}.panel-heading p{margin:4px 0 0;font-size:12px}
+.queue{display:grid;gap:11px}.queue-item{display:flex;gap:13px;align-items:center;justify-content:space-between;border:1px solid #e6edf7;border-radius:11px;padding:13px 15px}.queue-item strong{display:block;font-size:13px}.queue-item small{color:#667b98}.chip{display:inline-block;padding:4px 9px;border-radius:100px;font-size:11px;font-weight:800;background:#edf3ff;color:#245bad}.chip.alert{background:#fff1e5;color:#a35d20}.empty{border:1px dashed #d5e1f0;border-radius:12px;padding:30px;text-align:center;color:#71849c}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}.toolbar input,.toolbar select{padding:10px 11px;border:1px solid #cfdced;border-radius:9px;background:#fff;color:#233a5e}.toolbar input{min-width:230px;flex:1}
+table{width:100%;border-collapse:collapse;min-width:680px}th,td{text-align:left;padding:13px 10px;border-bottom:1px solid #e8eef6;font-size:12px}th{color:#70819b;font-size:11px}td strong{font-size:13px}.scroll{overflow-x:auto}
+#status{font-size:12px;color:#657b99;min-height:20px;margin:14px 0}.actions{display:grid;gap:10px;margin-top:15px}.actions a{display:flex;align-items:center;justify-content:space-between;border:1px solid #e2eaf6;padding:13px;border-radius:10px}
+@media(max-width:950px){.metrics{grid-template-columns:repeat(2,1fr)}.panels{grid-template-columns:1fr}}@media(max-width:550px){main{padding:22px 14px}.metrics{gap:9px}.metric{padding:14px}.metric strong{font-size:23px}.heading h1{font-size:28px}}
+</style><link rel="stylesheet" href="tms-shell.css?v=20261027-1"></head>
+<body data-wr-app="tms"><main>
+<div class="heading"><div><span class="eyebrow">OPERATIONS / COMMAND CENTER</span><h1>Transportation overview</h1><p>Monitor freight activity, margins, and shipments requiring attention.</p></div><a class="button" id="create" href="tms.html">+ Create Load</a></div>
+<div id="status" role="status">Checking access…</div>
+<section class="metrics" aria-label="Transportation indicators">
+<div class="metric"><small>Active loads</small><strong id="active">—</strong><span>Not yet delivered or closed</span></div>
+<div class="metric"><small>Scheduled pickups</small><strong id="pickups">—</strong><span>Next 48 hours</span></div>
+<div class="metric"><small>Requires attention</small><strong id="attention">—</strong><span>Exceptions needing review</span></div>
+<div class="metric"><small>Projected gross margin</small><strong id="margin">—</strong><span>Customer rate minus carrier cost</span></div>
+</section>
+<div class="panels">
+<section class="panel"><div class="panel-heading"><div><h2>Shipment watchlist</h2><p>Operational exceptions are surfaced first.</p></div><a href="tms.html" id="allLoads">All loads →</a></div>
+<div class="toolbar"><input id="search" type="search" placeholder="Search load, lane or partner" aria-label="Search shipments"><select id="stage" aria-label="Filter stage"><option value="">All stages</option><option value="draft">Draft</option><option value="booked">Booked</option><option value="dispatched">Dispatched</option><option value="in_transit">In transit</option><option value="delivered">Delivered</option></select></div>
+<div class="scroll"><table><thead><tr><th>Load</th><th>Lane</th><th>Pickup</th><th>Status</th><th>Margin</th><th></th></tr></thead><tbody id="loads"><tr><td colspan="6">Loading…</td></tr></tbody></table></div></section>
+<aside class="panel"><div class="panel-heading"><div><h2>Action queue</h2><p>Review these items before the next dispatch.</p></div></div><div id="queue" class="queue"></div><div class="actions"><a id="dispatch" href="tms-dispatch.html">Open dispatch board <span>→</span></a><a id="partners" href="tms-partners.html">Manage carrier network <span>→</span></a></div></aside>
+</div></main><script type="module" src="tms-command.js"></script><script src="tms-shell.js?v=20261027-2"></script></body></html>

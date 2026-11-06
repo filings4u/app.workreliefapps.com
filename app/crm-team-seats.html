@@ -1,0 +1,64 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#1768f5"><title>Add paid team seats | workrelief</title>
+<link rel="icon" href="../assets/img/fav.png">
+<style>
+:root{font-family:Inter,system-ui,Arial,sans-serif;color:#11294c;background:#f4f7fd}*{box-sizing:border-box}body{margin:0}.top{background:#fff;border-bottom:1px solid #d7e3f3}.top-inner{max-width:980px;margin:auto;padding:18px 22px;display:flex;justify-content:space-between;align-items:center;gap:15px}.top img{width:170px}.top a{color:#1768f5;text-decoration:none;font-weight:700;font-size:14px}main{max-width:980px;margin:50px auto;padding:0 22px 75px}.eyebrow{font-size:12px;color:#1768f5;font-weight:800;letter-spacing:.15em}h1{font-size:clamp(30px,4vw,44px);letter-spacing:-.045em;margin:12px 0 10px}h2{font-size:19px}p{color:#627694;line-height:1.7}.layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;margin-top:27px}.panel{background:#fff;border:1px solid #d8e4f7;border-radius:19px;padding:28px;min-width:0}.price{font-size:31px;font-weight:800;color:#1768f5;margin:18px 0 6px}.small{font-size:13px}label{display:block;font-size:14px;font-weight:700;margin:20px 0 7px}input{display:block;width:100%;border:1px solid #cbdcf3;border-radius:11px;padding:13px;font:inherit;margin-top:9px}.notice{background:#eff5ff;border-radius:11px;padding:14px;border:1px solid #cbdcff;color:#395a90;font-size:13px;line-height:1.6}.button{display:inline-block;background:#1768f5;color:white;border:0;border-radius:11px;cursor:pointer;padding:15px 20px;font:inherit;font-size:15px;font-weight:750;margin-top:20px;min-height:52px;width:100%}.button:disabled{opacity:.5;cursor:wait}.error{color:#ac2347!important}.status{font-size:14px;min-height:23px}#secure-fields{margin-top:25px}#secure-fields:empty{display:none}[hidden]{display:none!important}@media(max-width:740px){main{margin:25px auto;padding:0 15px 55px}.layout{grid-template-columns:1fr}.panel{padding:20px}}
+</style><link rel="stylesheet" href="workrelief-shell.css"></head><body><header class="top"><div class="top-inner"><img src="../assets/img/logo.png" alt="workrelief"><a id="back" href="crm-team.html">← Team access</a></div></header>
+<main><div class="eyebrow">WORKRELIEF CRM · ADDITIONAL TEAM SEATS</div><h1>Grow your team when you're ready.</h1><p>Keep your existing CRM subscription and records. Pay only for the additional team members you choose.</p>
+<div id="feedback" class="notice" role="status">Checking your active workspace and subscription…</div>
+<div id="purchase" class="layout" hidden><section class="panel"><h2>Add team members</h2><p>Each paid seat enables one additional teammate. Your owner account is already included.</p>
+<div class="notice" id="current"></div><label for="seats">How many additional seats?<input id="seats" type="number" min="1" max="100" step="1" value="1" required></label>
+<div class="price" id="total">$5.50</div><p class="small" id="cycle">per month · billed securely</p><button id="prepare" class="button" type="button">Continue to payment →</button>
+<p class="small">Seats activate only after payment confirmation. Then return to Team Access to email invitations.</p></section>
+<section class="panel"><h2>Secure payment</h2><p>Confirm your selected seats before entering payment details. We will not charge you again for CRM.</p><div id="secure-fields"></div><button id="pay" class="button" type="button" hidden disabled>Confirm payment →</button><p id="payment-status" class="status" role="status" aria-live="polite"></p></section></div></main>
+<script src="https://js.stripe.com/clover/stripe.js"></script><script type="module">
+import{createClient}from 'https://esm.sh/@supabase/supabase-js@2';
+const sb=createClient('https://cqzwoskpgefacghdnuyz.supabase.co','sb_publishable_CoIoX7Pinqd2o4kJwqCTqA_RKmePPZt');
+const $=id=>document.getElementById(id);
+const qp=new URLSearchParams(location.search);let workspaceId='',cycle='monthly',paid=0,loaded=null,checkout=null,element=null,processing=false;
+const status=(text,error=false)=>{$('feedback').textContent=text;$('feedback').classList.toggle('error',error)};
+const payStatus=(text,error=false)=>{$('payment-status').textContent=text;$('payment-status').classList.toggle('error',error)};
+function count(){const value=Number($('seats').value);if(!Number.isSafeInteger(value)||value<1||paid+value>100)return null;return value}
+function update(){
+ const seats=count();$('total').textContent=seats===null?'Enter a valid seat count':new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(seats*(cycle==='annual'?66:5.5));
+ $('cycle').textContent=cycle==='annual'?'per year · $5.50 per seat per month':'per month · $5.50 per seat';
+ $('prepare').disabled=seats===null||!!checkout;
+}
+$('seats').addEventListener('input',update);
+(async()=>{
+ try{
+  const{data:{user},error}=await sb.auth.getUser();if(error||!user){location.replace('login.html?next=app/crm-team.html');return;}
+  const{data:members,error:membershipError}=await sb.from('workspace_members').select('workspace_id,role').eq('user_id',user.id);
+  if(membershipError)throw membershipError;
+  const member=members?.find(x=>x.workspace_id===qp.get('workspace'));if(!member||!['owner','admin'].includes(member.role))throw Error('Only your workspace administrator can buy team seats.');
+  workspaceId=member.workspace_id;$('back').href='crm-team.html?workspace='+encodeURIComponent(workspaceId);
+  const{data:team,error:seatError}=await sb.from('wr_workspace_team_entitlements').select('paid_seats,billing_state').eq('workspace_id',workspaceId).maybeSingle();
+  if(seatError)throw seatError;if(!team||!['active','trialing'].includes(team.billing_state))throw Error('Activate your CRM subscription before purchasing seats.');
+  paid=Number(team.paid_seats||0);if(paid>=100)throw Error('Your workspace has reached the 100-seat limit.');
+  const{data:billingCycle,error:cycleError}=await sb.rpc('wr_team_billing_cycle',{p_workspace_id:workspaceId});
+  if(cycleError)throw cycleError;
+  cycle=billingCycle==='annual'?'annual':'monthly';
+  $('current').textContent=paid+' paid additional seat'+(paid===1?'':'s')+' already active. These remain unchanged.';
+  $('seats').max=String(100-paid);$('purchase').hidden=false;$('feedback').hidden=true;update();
+ }catch(error){status(error.message||'Unable to open your team checkout.',true)}
+})();
+$('prepare').addEventListener('click',async()=>{
+ const qty=count();if(qty===null)return;
+ const button=$('prepare');button.disabled=true;payStatus('Preparing your secure payment…');
+ try{
+  const{data:{session}}=await sb.auth.getSession();if(!session?.access_token)throw Error('Sign in again to continue');
+  const res=await fetch('https://cqzwoskpgefacghdnuyz.supabase.co/functions/v1/workrelief-create-checkout',{method:'POST',headers:{'content-type':'application/json','authorization':'Bearer '+session.access_token},body:JSON.stringify({purchase_type:'team_seats',workspace_id:workspaceId,additional_seats:qty})});
+  const info=await res.json().catch(()=>({}));if(!res.ok)throw Error(info.error||'Unable to begin secure payment');
+  if(!window.Stripe)throw Error('Secure payment fields did not load');
+  checkout=window.Stripe(info.publishable_key,{developerTools:{assistant:{enabled:false}}}).initCheckoutElementsSdk({clientSecret:info.client_secret});
+  element=checkout.createPaymentElement();element.mount('#secure-fields');
+  const actions=await checkout.loadActions();if(actions.type!=='success')throw Error(actions.error?.message||'Unable to open payment form');
+  loaded=actions.actions;$('pay').hidden=false;$('pay').disabled=false;$('pay').textContent='Pay '+new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(info.price_cents/100)+' →';
+  $('seats').disabled=true;payStatus('');
+ }catch(e){payStatus(e.message||'Unable to prepare payment',true);button.disabled=false}
+});
+$('pay').addEventListener('click',async()=>{
+ if(processing||!loaded)return;processing=true;$('pay').disabled=true;payStatus('Confirming payment…');
+ try{const result=await loaded.confirm();if(result?.type==='error'||result?.error)throw Error(result.error?.message||'Payment could not be confirmed');payStatus('Payment is processing. Your purchase confirmation will open shortly.');}
+ catch(e){payStatus(e.message||'Unable to confirm payment',true);$('pay').disabled=false;processing=false}
+});
+</script></body></html>

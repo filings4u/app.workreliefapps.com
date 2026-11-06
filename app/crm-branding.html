@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#1768f5">
+<title>CRM branding | workrelief</title><link rel="icon" href="../assets/img/fav.png">
+<style>
+:root{--blue:#1768f5;--ink:#10264b;--muted:#607494;--line:#d7e3f6;--bg:#f4f8ff;font-family:Inter,system-ui,Arial,sans-serif;color:var(--ink)}*{box-sizing:border-box}body{margin:0;background:var(--bg);min-height:100dvh}
+header{background:white;border-bottom:1px solid var(--line)}.head{max-width:1450px;margin:auto;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:20px}.head img{width:155px}.head a,.back{color:var(--blue);text-decoration:none;font-weight:700}
+main{max-width:1450px;margin:auto;padding:42px 22px 80px}h1{font-size:clamp(28px,4vw,41px);letter-spacing:-.045em;margin:10px 0 12px}h2{font-size:21px;margin:0 0 15px}p{line-height:1.7;color:var(--muted)}.kicker{font-size:12px;letter-spacing:.16em;font-weight:800;color:var(--blue)}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:22px}.card{background:white;border:1px solid var(--line);border-radius:18px;padding:28px;margin-top:22px}.notice{background:#eff5ff;border:1px solid #cbdcff;border-radius:12px;padding:18px;color:#335a99;line-height:1.6}.muted{font-size:14px;color:var(--muted)}
+label{display:block;font-size:13px;font-weight:700;margin:18px 0 8px}input{display:block;width:100%;margin-top:8px;border:1px solid #ccdbf0;border-radius:10px;padding:13px;font:inherit;color:var(--ink)}input:focus{outline:2px solid #bad3ff}.button{display:inline-flex;border:1px solid var(--blue);border-radius:10px;background:var(--blue);color:#fff;padding:14px 20px;font:inherit;font-size:14px;font-weight:750;text-decoration:none;cursor:pointer;margin-top:20px}.secondary{background:white;color:var(--blue)}.button:disabled{opacity:.6;cursor:wait}#logo-preview{max-width:210px;max-height:110px;object-fit:contain;display:none;border-radius:9px;margin-top:12px}#brand-preview{border-left:6px solid var(--blue);padding:25px;background:#f5f8fd;border-radius:12px;min-height:145px}#brand-preview strong{font-size:26px}.hidden{display:none!important}.message{font-size:14px;color:#2259ac;min-height:24px}.message.error{color:#b42339}
+@media(max-width:740px){main{padding:28px 15px 50px}.cards{grid-template-columns:1fr;gap:0}.card{padding:22px}.head{padding:14px 16px}}
+</style><style>.wl-layout{display:grid;grid-template-columns:minmax(0,1fr);gap:20px;align-items:start}.wl-side{margin-top:22px;position:sticky;top:20px}.wl-body{min-width:0;width:100%}.wl-app{display:block;width:100%;text-align:left;border:1px solid #d7e3f6;border-radius:11px;background:#fff;padding:13px;margin:8px 0;cursor:pointer;color:#10264b;font:inherit}.wl-app.active{background:#eaf2ff;border-color:#1768f5}.wl-app:disabled{opacity:.65;cursor:default;background:#f0f2f6}.wl-app.unpurchased{background:#f0f2f6;color:#6a7484;border-color:#d9dde4}.wl-app.unpurchased:hover{background:#e6ecf5}.wl-app small{display:block;color:#678;margin-top:4px}.wl-app b{font-size:14px}.preview-shell{border:1px solid #d7e3f6;border-radius:14px;overflow:hidden;background:#f6f9ff;--accent:#1768f5}.preview-nav{background:white;display:flex;align-items:center;justify-content:space-between;padding:17px;border-bottom:1px solid #ddd;gap:12px}.preview-company{display:flex;align-items:center;gap:12px}.preview-company img{display:none;width:110px;max-height:46px;object-fit:contain}.preview-layout{display:grid;grid-template-columns:175px 1fr;min-height:345px}.preview-sidebar{background:#142a4d;color:#fff;padding:23px 12px}.preview-sidebar div{padding:14px 9px;margin-bottom:5px;border-radius:7px;font-size:13px}.preview-sidebar div:first-child{background:var(--accent)}.preview-main{padding:28px;min-width:0}.preview-main h3{font-size:26px;margin:10px 0}.preview-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}.preview-metrics div{background:white;border:1px solid #d7e3f6;border-top:4px solid var(--accent);padding:16px 8px;border-radius:8px}.preview-metrics b{display:block;font-size:23px}.preview-metrics small{color:#678}.preview-chart{background:white;border:1px solid #d7e3f6;border-radius:10px;padding:22px;color:#627492;margin-bottom:20px}.preview-chart-line{height:46px;border-bottom:4px solid var(--accent);transform:skewY(-5deg)}#preview-button{display:inline-block;background:var(--accent);color:white;padding:11px;border-radius:7px;font-size:12px}@media(max-width:850px){.wl-layout{display:block;grid-template-columns:none}.wl-side{position:static}.preview-layout{grid-template-columns:100px 1fr}.preview-sidebar{padding:10px 3px}.preview-sidebar div{font-size:10px}.preview-main{padding:12px}.preview-metrics{gap:5px}}</style><style>.real-dashboard-frame{height:790px;width:100%;min-width:0;border:1px solid #d7e3f6;border-radius:14px;overflow:hidden;background:#f4f8ff}.real-dashboard-frame iframe{width:100%;height:100%;border:0;pointer-events:none}.wl-layout{display:block;width:100%;grid-template-columns:none;gap:0}.wl-body{display:block;width:100%;min-width:0}.wl-body .card{width:100%;margin-top:22px}.wl-side{max-height:calc(100dvh - 35px);overflow-y:auto}.head,main{max-width:1450px}@media(max-width:850px){.wl-layout{grid-template-columns:1fr}.wl-side{max-height:300px;overflow-y:auto}.real-dashboard-frame{height:660px}}</style><style id="wr-brand-studio">
+/* White Label design studio — brand editor plus large live application preview */
+body{background:#f5f8fd}
+.head,main{max-width:1450px}
+main{padding:38px 24px 76px}
+main>h1{font-size:clamp(32px,3.1vw,43px);letter-spacing:-.045em;margin:9px 0 6px;color:#0d2045}
+main>.kicker{font-size:11px;letter-spacing:.18em}
+main>p{margin:0 0 25px;font-size:15px;line-height:1.55}
+.brand-workspace{display:grid;grid-template-columns:minmax(340px,430px) minmax(0,1fr);align-items:start;gap:22px}
+.brand-editor-column{min-width:0}
+.brand-panel,.brand-preview-panel{background:#fff;border:1px solid #dbe5f4;border-radius:15px;box-shadow:0 5px 22px rgba(21,54,103,.035);min-width:0}
+.brand-panel{padding:26px}
+.brand-panel-heading{display:flex;align-items:flex-start;gap:13px;padding-bottom:21px;border-bottom:1px solid #e6edf7}
+.brand-number{flex:none;display:grid;place-items:center;width:37px;height:37px;border-radius:10px;background:#eaf1ff;color:#1262ef;font-size:12px;font-weight:800}
+.brand-overline{font-size:10px;font-weight:850;letter-spacing:.17em;color:#1768f5;margin-bottom:6px}
+.brand-panel h2,.brand-preview-panel h2{font-size:20px;letter-spacing:-.025em;margin:0 0 5px;color:#10264b}
+.brand-panel-heading p,.brand-preview-header p{font-size:13px;line-height:1.5;margin:0;color:#7588a8}
+.brand-form-section{padding:22px 0;border-bottom:1px solid #e6edf7}
+.brand-form-section h3{font-size:14px;color:#10264b;margin:0 0 16px}
+.brand-form-section label{font-size:12px;font-weight:750;margin:15px 0 7px;color:#193153}
+.brand-form-section input:not([type=color]):not([type=file]){height:44px;margin-top:7px;border-radius:9px;background:#fff}
+.brand-color-row{display:flex;align-items:center;gap:13px;padding:12px;border:1px solid #dbe5f4;border-radius:10px}
+.brand-color-row input[type=color]{flex:none;width:54px;height:45px;padding:4px;border:1px solid #dbe5f4;border-radius:8px;background:#fff;margin:0;cursor:pointer}
+.brand-color-row>div{display:flex;flex-direction:column;gap:3px;min-width:0}
+.brand-color-row strong{font-size:12px}
+.brand-color-row span{font-size:11px;color:#7387a7}
+.brand-color-row output{font-size:11px;font-weight:800;color:#47638f;margin-left:auto}
+.brand-logo-upload{display:flex;align-items:center;flex-wrap:wrap;gap:12px;padding:15px;border:1px dashed #bbcee9;background:#f8faff;border-radius:11px}
+.brand-logo-icon{display:grid;place-items:center;flex:none;width:36px;height:36px;border-radius:9px;color:#1768f5;background:#e7efff;font-size:21px}
+.brand-logo-upload strong,.brand-logo-upload small{display:block}.brand-logo-upload strong{font-size:12px}.brand-logo-upload small{font-size:11px;color:#7b8dad;margin-top:3px}
+.brand-logo-upload input[type=file]{width:100%;padding:0;margin:5px 0 0;font-size:11px;border:0;background:transparent}
+.brand-form-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding-top:20px}
+.brand-form-actions .button{margin:0;padding:12px 16px;justify-content:center;min-height:43px;border-radius:9px}
+.brand-help{display:flex;align-items:flex-start;gap:11px;padding:16px 18px;color:#54709c;font-size:12px}
+.brand-help>span{font-size:19px;color:#1768f5}.brand-help p{margin:0;line-height:1.6;font-size:12px}
+.brand-preview-panel{padding:22px;position:sticky;top:20px}
+.brand-preview-header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:17px;flex-wrap:wrap}
+.brand-live-indicator{display:inline-flex;align-items:center;gap:7px;padding:7px 10px;border-radius:999px;background:#e9f9f1;color:#077a52;font-size:11px;font-weight:750;white-space:nowrap}
+.brand-live-indicator span{height:7px;width:7px;border-radius:50%;background:#0aa56d}
+.brand-browser{border:1px solid #dbe5f4;border-radius:11px;overflow:hidden;background:#f4f7fd}
+.brand-browser-toolbar{height:37px;display:flex;align-items:center;gap:12px;padding:0 12px;background:#f8faff;border-bottom:1px solid #dbe5f4;color:#8292ad;font-size:10px}
+.brand-browser-dots{display:flex;gap:5px}.brand-browser-dots i{width:8px;height:8px;border-radius:50%;background:#cbd7e8}
+.brand-browser-tag{margin-left:auto;color:#426aa2;font-weight:750}
+.brand-browser .real-dashboard-frame{border:none;border-radius:0;height:670px}
+@media(max-width:1080px){.brand-workspace{grid-template-columns:minmax(300px,390px) minmax(0,1fr)}.brand-browser .real-dashboard-frame{height:610px}}
+@media(max-width:850px){.brand-workspace{grid-template-columns:1fr}.brand-preview-panel{position:static}.brand-browser .real-dashboard-frame{height:650px}}
+@media(max-width:600px){main{padding:27px 15px 48px}.brand-panel,.brand-preview-panel{padding:17px}.brand-browser .real-dashboard-frame{height:490px}.brand-color-row{flex-wrap:wrap}.brand-form-actions .button{flex:1}}
+</style><style id="wr-brand-layout-repair">
+html{overflow-y:auto!important;overflow-x:hidden!important;height:auto!important}
+body{overflow:visible!important;min-height:100vh!important;height:auto!important}
+body>main{height:auto!important;min-height:calc(100vh - 90px);overflow:visible!important;display:block!important}
+#layout,#editor,.wl-body,.brand-workspace,.brand-editor-column{height:auto!important;max-height:none!important;overflow:visible!important}
+.brand-preview-panel{position:relative!important;top:auto!important;align-self:start!important}
+.brand-workspace{grid-template-columns:minmax(340px,430px) minmax(0,1fr)!important;align-items:start!important}
+.brand-browser .real-dashboard-frame{position:relative;overflow:hidden;height:auto!important;min-height:450px}
+.brand-browser .real-dashboard-frame iframe{position:absolute;left:0;top:0;display:block;width:1450px!important;min-width:1450px!important;max-width:none!important;height:1100px!important;transform-origin:top left!important;transform:scale(var(--brand-preview-scale,.55))!important;pointer-events:none!important}
+@media(max-width:850px){.brand-workspace{grid-template-columns:1fr!important}.brand-preview-panel{position:relative!important}}
+@media(max-width:600px){.brand-browser .real-dashboard-frame{min-height:270px}}
+</style><link rel="stylesheet" href="crm-modal.css"><style>.wm-overlay.hidden{display:none!important}</style><script defer src="workspace-branding.js"></script><link rel="stylesheet" href="workrelief-shell.css"></head>
+<body><header><div class="head"><img src="../assets/img/logo.png" alt="workrelief"><a href="crm.html">← Back to CRM</a></div></header>
+<main><div class="kicker">WORKRELIEF · WHITE LABEL</div><h1>Design your application</h1><p>Customize CRM branding and preview your CRM dashboard.</p><div id="load" class="notice">Checking access…</div><div id="layout" class="wl-layout hidden"><div class="wl-body"><section id="locked" class="card hidden"><h2>White Label upgrade</h2><p id="locked-description">Purchase White Label to customize this application's identity.</p><a class="button" id="upgrade">Purchase White Label →</a></section><div id="editor" class="hidden"><div class="brand-workspace">
+  <div class="brand-editor-column">
+   <section class="brand-panel">
+    <div class="brand-panel-heading"><div class="brand-number">01</div><div><div class="brand-overline">BRAND IDENTITY</div><h2 id="editing-title">Your brand</h2><p>Set the name and visual identity customers see throughout your CRM.</p></div></div>
+    <form id="brand-form">
+     <div class="brand-form-section"><h3>Business details</h3>
+      <label for="brand-name">Business name<input id="brand-name" required maxlength="120" placeholder="Your business name"></label>
+      <label for="brand-support">Support email<input id="brand-support" type="email" placeholder="support@yourbusiness.com"></label>
+     </div>
+     <div class="brand-form-section"><h3>Appearance</h3>
+      <label for="brand-color">Brand accent color</label>
+      <div class="brand-color-row"><input id="brand-color" type="color" value="#1768f5"><div><strong>Primary accent</strong><span>Buttons, active navigation, and highlights</span></div><output id="brand-color-value">#1768F5</output></div>
+      <label for="brand-logo">Business logo</label>
+      <div class="brand-logo-upload"><div class="brand-logo-icon">↥</div><div><strong>Upload your logo</strong><small>PNG, JPEG or WebP · Up to 2 MB</small></div><input id="brand-logo" type="file" accept="image/png,image/jpeg,image/webp"></div>
+      <img id="logo-preview" alt="Logo preview" style="display:none;max-width:180px;max-height:85px;object-fit:contain;margin:12px 0">
+     </div>
+     <div class="brand-form-actions"><button class="button" id="save-brand" type="submit">Save branding</button><button class="button secondary" id="reset-brand" type="button">Reset to defaults</button></div>
+    </form>
+    <p id="feedback" class="message" role="status"></p>
+   </section>
+   <div class="brand-help"><span>ⓘ</span><p><strong>Live preview</strong> — Changes to your name and accent color appear in the preview before you save. Save branding to apply updates to your workspace.</p></div>
+  </div>
+  <section class="brand-preview-panel"><div class="brand-preview-header"><div><div class="brand-overline">LIVE APPLICATION PREVIEW</div><h2>See your CRM with your brand</h2><p>Explore how your dashboard looks with your business identity.</p></div><span class="brand-live-indicator"><span></span> Live preview</span></div><div class="brand-browser"><div class="brand-browser-toolbar"><div class="brand-browser-dots"><i></i><i></i><i></i></div><span>workrelief CRM · Preview</span><span class="brand-browser-tag">Read-only</span></div><div class="real-dashboard-frame"><iframe id="dashboard-preview" title="Read-only CRM dashboard preview" loading="lazy" tabindex="-1"></iframe></div></div></section>
+ </div></div></div></div></main><div id="reset-modal" class="wm-overlay hidden"><section class="wm-dialog wm-compact" role="dialog" aria-modal="true" aria-labelledby="reset-title"><header class="wm-header"><span class="wm-eyebrow">WHITE LABEL</span><h2 class="wm-heading" id="reset-title">Reset CRM branding?</h2><p class="wm-description">Review the action before resetting your workspace branding.</p><button type="button" class="wm-close" aria-label="Close" onclick="document.getElementById('reset-modal').classList.add('hidden')">×</button></header><div class="wm-scroll"><section class="wm-section"><div class="wm-section-head"><span class="wm-section-symbol">↺</span><div><h3>Restore default branding</h3><p class="wm-section-description">Your purchased White Label access remains active.</p></div></div><p>Your custom logo, company name and colors will return to their defaults.</p></section></div><footer class="wm-footer"><button type="button" id="cancel-reset" class="btn">Keep branding</button><button type="button" id="confirm-reset" class="btn primary">Reset branding</button></footer></section></div>
+<script type="module">
+import{createClient}from'https://esm.sh/@supabase/supabase-js@2';
+const sb=createClient('https://cqzwoskpgefacghdnuyz.supabase.co','sb_publishable_CoIoX7Pinqd2o4kJwqCTqA_RKmePPZt');const $=id=>document.getElementById(id),q=new URLSearchParams(location.search);
+const colors={crm:'#1768F5',scheduling:'#12B8B1',forms:'#FF8419',desk:'#ED3192',hr:'#8839EC',training:'#247BFF',compliance:'#10C66E',time:'#8A3CF6',tasks:'#E59A32',projects:'#4C77D9',chat:'#7A4FDD',docs:'#5B77A6',sign:'#E68C45',billing:'#3F94CC',field:'#8A69D4',inventory:'#C77842',assets:'#3B81AC',workflow:'#8467D0',ai:'#9457E8'};
+let wid='',app='crm',grants=[],logoUrl='',blobUrl=null;const label=id=>id==='crm'?'CRM':id[0].toUpperCase()+id.slice(1);
+const message=(text,error=false)=>{$('feedback').textContent=text;$('feedback').classList.toggle('error',error)};
+function preview(){const frame=$('dashboard-preview');if(!frame)return;let doc;try{doc=frame.contentDocument}catch{return}if(!doc)return;const name=$('brand-name').value.trim()||'workrelief',accent=$('brand-color').value;const brand=doc.querySelector('.sidebar .brand');if(brand){brand.replaceChildren();if($('logo-preview').style.display==='block'&&$('logo-preview').src){const img=doc.createElement('img');img.src=$('logo-preview').src;img.style.cssText='display:block;max-width:175px;max-height:70px;object-fit:contain';brand.append(img)}else brand.textContent=name;}doc.documentElement.style.setProperty('--blue',accent);doc.documentElement.style.setProperty('--accent',accent);doc.querySelectorAll('.nav button.on,.brandmark,.btn.primary').forEach(el=>{el.style.backgroundColor=accent;el.style.borderColor=accent})}
+function resizeBrandDashboardPreview(){
+ const frame=$('dashboard-preview');const viewport=frame?.parentElement;if(!frame||!viewport)return;
+ const width=Math.max(1,viewport.clientWidth);
+ const scale=Math.min(1,width/1450);
+ viewport.style.setProperty('--brand-preview-scale',String(scale));
+ viewport.style.height=Math.ceil(1100*scale)+'px';
+}
+const brandPreviewObserver=new ResizeObserver(resizeBrandDashboardPreview);
+brandPreviewObserver.observe($('dashboard-preview').parentElement);
+window.addEventListener('resize',resizeBrandDashboardPreview);
+resizeBrandDashboardPreview();
+function loadDashboard(){const frame=$('dashboard-preview');if(!frame)return;if(!frame.dataset.loaded){frame.dataset.loaded='1';frame.src='crm.html?workspace='+encodeURIComponent(wid)+'&branding_preview=1';frame.addEventListener('load',()=>{preview();setTimeout(preview,1600);setTimeout(preview,3500)})}else preview()}
+$('brand-name').oninput=preview;$('brand-color').oninput=()=>{$('brand-color-value').textContent=$('brand-color').value.toUpperCase();preview()};
+$('brand-logo').onchange=()=>{const file=$('brand-logo').files[0];if(blobUrl)URL.revokeObjectURL(blobUrl);if(file){blobUrl=URL.createObjectURL(file);$('logo-preview').src=blobUrl;$('logo-preview').style.display='block';}};
+function shop(white=false){const url=new URL('purchase-apps.html',location.href);url.searchParams.set('workspace',wid);if(white)url.searchParams.set('white',app);else url.searchParams.set('apps',app);return url.href}
+function shopFor(code){const url=new URL('purchase-apps.html',location.href);url.searchParams.set('workspace',wid);url.searchParams.set('apps',code);return url.href}
+async function openApp(code){app='crm';code='crm';$('editor').classList.add('hidden');$('locked').classList.add('hidden');$('brand-logo').value='';logoUrl='';if(blobUrl){URL.revokeObjectURL(blobUrl);blobUrl=null}
+const e=grants.find(x=>x.application_code===code&&['active','trialing'].includes(x.billing_state));if(!e){location.assign(shopFor(code));return}
+if(!e.white_label_enabled){$('locked-description').textContent='Your '+label(code)+' application is already purchased. Add White Label to personalize its logo, name, colors and communications.';$('upgrade').href=shop(true);$('locked').classList.remove('hidden');return}
+$('editing-title').textContent=label(code)+' branding';const{data,error}=await sb.from('wr_workspace_branding').select('brand_name,logo_url,primary_color,support_email').eq('workspace_id',wid).eq('application_code',code).maybeSingle();if(error){$('load').textContent=error.message;$('load').classList.remove('hidden');return}
+$('brand-name').value=data?.brand_name||'';$('brand-color').value=data?.primary_color||colors[code];$('brand-support').value=data?.support_email||'';logoUrl=data?.logo_url||'';$('logo-preview').style.display=logoUrl?'block':'none';if(logoUrl)$('logo-preview').src=logoUrl;loadDashboard();$('editor').classList.remove('hidden');$('load').classList.add('hidden')}
+(async()=>{try{const{data:{user},error}=await sb.auth.getUser();if(error||!user){location.replace('login.html?next='+encodeURIComponent('app/crm-branding.html'+location.search));return}const{data:members,error:me}=await sb.from('workspace_members').select('workspace_id,role').eq('user_id',user.id);if(me)throw me;const member=members.find(m=>m.workspace_id===q.get('workspace'))||members[0];if(!member)throw Error('Workspace not found');wid=member.workspace_id;if(member.role!=='owner'){location.replace('crm-team-workspace.html?workspace='+encodeURIComponent(wid));return}const{data,error:e}=await sb.from('wr_application_entitlements').select('application_code,white_label_enabled,billing_state').eq('workspace_id',wid);if(e)throw e;grants=data||[];$('layout').classList.remove('hidden');await openApp('crm');}catch(e){$('load').textContent=e.message||'Unable to load branding';}})();
+$('brand-form').onsubmit=async event=>{event.preventDefault();const button=$('save-brand');button.disabled=true;message('Saving branding…');try{const e=grants.find(x=>x.application_code===app&&x.white_label_enabled&&['active','trialing'].includes(x.billing_state));if(!e)throw Error('White Label subscription required');const file=$('brand-logo').files[0];if(file){if(!['image/png','image/jpeg','image/webp'].includes(file.type)||file.size>2097152)throw Error('Choose PNG, JPG or WebP under 2 MB');const extension=file.type==='image/png'?'png':file.type==='image/webp'?'webp':'jpg';const path='workspaces/'+wid+'/'+app+'/logo-'+crypto.randomUUID()+'.'+extension;const{error}=await sb.storage.from('workrelief-customer-branding').upload(path,file,{contentType:file.type});if(error)throw error;logoUrl=sb.storage.from('workrelief-customer-branding').getPublicUrl(path).data.publicUrl}
+const record={workspace_id:wid,application_code:app,brand_name:$('brand-name').value.trim(),logo_url:logoUrl||'',primary_color:$('brand-color').value,support_email:$('brand-support').value.trim(),updated_at:new Date().toISOString()};if(!record.brand_name)throw Error('Enter the business name');const{error}=await sb.from('wr_workspace_branding').upsert(record,{onConflict:'workspace_id,application_code'});if(error)throw error;message('Branding saved.');if(logoUrl){$('logo-preview').src=logoUrl;$('logo-preview').style.display='block';void 0}preview();}catch(e){message(e.message||'Save failed',true)}finally{button.disabled=false}};
+const resetModal=$('reset-modal');$('reset-brand').onclick=()=>{resetModal.classList.remove('hidden');$('confirm-reset').focus()};$('cancel-reset').onclick=()=>resetModal.classList.add('hidden');resetModal.addEventListener('click',event=>{if(event.target===resetModal)resetModal.classList.add('hidden')});document.addEventListener('keydown',event=>{if(event.key==='Escape')resetModal.classList.add('hidden')});$('confirm-reset').onclick=async()=>{const btn=$('confirm-reset');btn.disabled=true;message('Resetting…');try{const{error}=await sb.from('wr_workspace_branding').upsert({workspace_id:wid,application_code:app,brand_name:'',logo_url:'',primary_color:colors[app],support_email:'',updated_at:new Date().toISOString()},{onConflict:'workspace_id,application_code'});if(error)throw error;resetModal.classList.add('hidden');await openApp(app);message('Branding reset to default.')}catch(e){message(e.message||'Reset failed',true)}finally{btn.disabled=false}};
+</script></body></html>
