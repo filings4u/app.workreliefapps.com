@@ -1,0 +1,18 @@
+(() => {
+ const params=new URLSearchParams(location.search);
+ const selected=params.get('workspace')||'';
+ const page=location.pathname.split('/').pop()||'tms.html';
+ const routes=[['tms-command.html','Command Center','◫'],['tms.html','Overview & Loads','▤'],['tms-dispatch.html','Dispatch Board','🚚'],['tms-partners.html','Customers & Carriers','♧']];
+ const href=file=>file+(selected?'?workspace='+encodeURIComponent(selected):'');
+ const aside=document.createElement('aside');aside.className='tms-sidebar';
+ const logo=document.createElement('a');logo.href=href('tms.html');logo.className='tms-logo';const img=document.createElement('img');img.src='../assets/img/logo.png';img.alt='WorkRelief';logo.append(img);aside.append(logo);
+ const label=document.createElement('span');label.className='tms-nav-label';label.textContent='Transportation Management';aside.append(label);
+ const nav=document.createElement('nav');for(const [file,name,symbol] of routes){const a=document.createElement('a');a.href=href(file);a.textContent=symbol+'  '+name;if(page===file||(page==='tms-load.html'&&file==='tms.html'))a.setAttribute('aria-current','page');nav.append(a)}aside.append(nav);
+ const bar=document.createElement('header');bar.className='tms-topbar';const brand=document.createElement('strong');brand.textContent='WorkRelief / Transportation Management';const account=document.createElement('details');account.className='tms-account';const summary=document.createElement('summary');summary.textContent='Workspace ▾';const menu=document.createElement('div');menu.className='tms-account-menu';for(const [name,file] of [['My Applications','index.html'],['Subscriptions','subscriptions.html'],['Billing & Receipts','billing.html']]){const a=document.createElement('a');a.href=href(file);a.textContent=name;menu.append(a)}account.append(summary,menu);bar.append(brand,account);
+ document.addEventListener('click',e=>{if(!account.contains(e.target))account.open=false});
+ const currentSide=document.querySelector('.layout>.side');const currentBar=document.querySelector('.layout>.main>.top');
+ if(currentSide&&currentBar){const frame=document.querySelector('.layout'),content=document.querySelector('.layout>.main');frame.classList.add('tms-frame');content.classList.add('tms-content');currentSide.replaceWith(aside);currentBar.replaceWith(bar)}
+ else{const main=document.querySelector('body>main');const oldHeader=document.querySelector('body>header');if(!main)return;const frame=document.createElement('div');frame.className='tms-frame';const content=document.createElement('div');content.className='tms-content';main.before(frame);frame.append(aside,content);content.append(bar,main);oldHeader?.remove()}
+ if(page==='tms-dispatch.html'){const main=document.querySelector('.tms-content>main'),grid=main?.querySelector('.grid'),table=main?.querySelector('.card.table');if(grid&&table){const details=document.createElement('details');details.className='tms-collapsible';const title=document.createElement('summary');title.textContent='Manage Drivers, Trucks, Trailers & Assignments';details.append(title,grid);table.after(details);const t=table.querySelector('h2');if(t)t.textContent='Active Dispatch Assignments';}}
+ const workspace=document.getElementById('workspaceName')||document.getElementById('workspace');if(workspace){const observer=new MutationObserver(()=>{if(workspace.textContent&&!/authenticating/i.test(workspace.textContent))summary.textContent=workspace.textContent.trim()+' ▾'});observer.observe(workspace,{childList:true,characterData:true,subtree:true});}
+})();

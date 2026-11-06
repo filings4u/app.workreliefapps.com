@@ -1,0 +1,15 @@
+/* Shared WorkRelief TMS product navigation */
+body[data-wr-app="tms"]{--tms-nav:#fff;font-family:Inter,system-ui,Arial,sans-serif}
+.tms-frame{display:grid;grid-template-columns:246px minmax(0,1fr);min-height:100vh}
+.tms-sidebar{background:#fff;border-right:1px solid #dce6f3;padding:24px 15px;min-width:0}
+.tms-logo{display:block;padding:8px 9px 25px}.tms-logo img{width:168px;max-width:100%}
+.tms-nav-label{display:block;padding:15px 12px 12px;color:#7890ad;font-size:10px;font-weight:800;letter-spacing:.13em;text-transform:uppercase}
+.tms-sidebar nav{display:grid;gap:4px}.tms-sidebar nav a{display:flex;align-items:center;gap:9px;color:#344c70;border-radius:9px;padding:13px 12px;font-size:13px;text-decoration:none;font-weight:700}
+.tms-sidebar nav a:hover,.tms-sidebar nav a[aria-current="page"]{background:#e9f1ff;color:#1768f5}
+.tms-content{min-width:0}.tms-topbar{background:#fff;border-bottom:1px solid #dce6f3;padding:18px 30px;display:flex;justify-content:space-between;align-items:center;gap:15px;min-height:75px}
+.tms-topbar strong{color:#142a4a}.tms-account{position:relative}.tms-account summary{cursor:pointer;list-style:none;border:1px solid #d9e5f2;background:#fff;padding:10px 14px;border-radius:10px;font-weight:750;color:#1b3a65}.tms-account summary::-webkit-details-marker{display:none}
+.tms-account-menu{position:absolute;right:0;top:calc(100% + 6px);width:215px;z-index:50;background:#fff;border:1px solid #dce6f3;box-shadow:0 16px 42px #11234122;border-radius:12px;padding:7px}
+.tms-account-menu a{display:block;color:#1a365a;text-decoration:none;padding:12px;border-radius:7px;font-size:13px;font-weight:700}.tms-account-menu a:hover{background:#eff5ff}
+.tms-content>main{max-width:1450px;margin:0 auto;padding:30px 26px 80px}.tms-pagehead{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.tms-overline{letter-spacing:.14em;font-weight:800;color:#1768f5;font-size:11px}
+.tms-collapsible{margin:16px 0;border:1px solid #dce6f2;border-radius:12px;background:#fff}.tms-collapsible>summary{cursor:pointer;padding:16px 20px;color:#1768f5;font-weight:800}.tms-collapsible>.grid{padding:0 18px 18px}
+@media(max-width:850px){.tms-frame{grid-template-columns:1fr}.tms-sidebar{border-right:0;border-bottom:1px solid #dce6f3;padding:12px}.tms-logo{padding:6px 12px}.tms-logo img{width:135px}.tms-sidebar nav{display:flex;overflow-x:auto}.tms-sidebar nav a{white-space:nowrap}.tms-nav-label{display:none}.tms-topbar{padding:12px 16px}.tms-content>main{padding:22px 13px}}
