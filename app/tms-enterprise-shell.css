@@ -185,3 +185,32 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 @media(max-width:1150px){.tms-command-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:760px){.tms-command-exception{grid-template-columns:1fr}.tms-command-finance .tms-command-grid{grid-template-columns:1fr}}
 @media(max-width:480px){.tms-command-grid{grid-template-columns:1fr 1fr;gap:8px}.tms-command-tile{min-height:95px;padding:12px}.tms-command-tile>strong{font-size:22px}}
+
+/* Operational alerts extend the existing TMS command center, not a separate application. */
+.tms-command-alerts{display:grid;gap:15px}
+.tms-alerts-heading{display:flex;align-items:start;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.tms-alerts-heading h3{font-size:18px;color:#1c3856;margin:0 0 7px}
+.tms-alerts-heading p{font-size:12px;color:#68809a;margin:0}
+.tms-alert-refresh{background:#1768f5!important;color:white;border:0;border-radius:9px;padding:9px 14px;font:inherit;font-weight:750;cursor:pointer}
+.tms-alert-refresh:disabled{opacity:.55;cursor:not-allowed}
+.tms-alerts-stats{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:9px}
+.tms-alert-stat{border:1px solid #e0eaf5;background:#f8fbff;border-radius:11px;padding:13px;min-width:0}
+.tms-alert-stat span{display:block;font-size:11px;font-weight:700;color:#687f99;line-height:1.4}
+.tms-alert-stat strong{display:block;font-size:24px;color:#153c67;margin-top:8px}
+.tms-alert-tools{display:flex;justify-content:flex-start;gap:12px}
+.tms-alert-tools select{font:inherit;border:1px solid #c7d9ef;border-radius:9px;color:#234467;padding:10px 12px;background:#fff;max-width:100%}
+.tms-alert-state{font-size:12px;color:#68809a;margin:0}
+.tms-alerts-list{display:grid;gap:8px;max-height:480px;overflow-y:auto}
+.tms-alerts-list>p{padding:19px 12px;color:#68809a;margin:0}
+.tms-alert-row{display:grid;grid-template-columns:100px minmax(0,1fr) 125px;align-items:center;gap:13px;background:#fff;border:1px solid #e0eaf5;border-radius:10px;padding:12px;color:#1c395a}
+.tms-alert-row:hover{border-color:#97c0f5;background:#f7fbff}
+.tms-alert-severity{display:inline-flex;align-items:center;justify-content:center;border-radius:16px;padding:5px 9px;font-size:11px;font-weight:800}
+.tms-alert-critical{background:#ffe9ea;color:#a53243}
+.tms-alert-warning{background:#fff4db;color:#956319}
+.tms-alert-description{display:grid;gap:4px;min-width:0}
+.tms-alert-description strong{font-size:12px;color:#234565}
+.tms-alert-description small{font-size:11px;color:#68819c}
+.tms-alert-date{font-size:11px;font-weight:700;color:#64809d;text-align:right}
+.tms-alert-row:focus-visible,.tms-alert-refresh:focus-visible,.tms-alert-tools select:focus-visible{outline:3px solid #f0bc29;outline-offset:3px}
+@media(max-width:1200px){.tms-alerts-stats{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:650px){.tms-alerts-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.tms-alert-row{grid-template-columns:1fr;gap:8px}.tms-alert-date{text-align:left}.tms-alerts-list{max-height:none}}
