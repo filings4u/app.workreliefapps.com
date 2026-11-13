@@ -162,3 +162,26 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 .broker-tool:hover,.broker-flow-step:hover{background:var(--wr-tms-accent-soft)}
 /* Accessible unified focus treatment. */
 .sidebar a:focus-visible,.topbar a:focus-visible,.wf-action:focus-visible,.sidebar-toggle:focus-visible{outline:3px solid #f5b800;outline-offset:2px}
+
+/* Live enterprise TMS command center. Shares the existing WorkRelief layout and navigation. */
+.tms-command-summary{display:grid;gap:14px}
+.tms-command-summary>h2,.tms-command-finance h3,.tms-command-exceptions h3{margin:0;font-size:18px;color:#1b3657}
+.tms-command-summary>p{margin:0;color:#6b809b;font-size:13px}
+.tms-command-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.tms-command-tile{background:#f8fbff;border:1px solid #dbe7f5;border-radius:12px;padding:16px;display:grid;align-content:space-between;min-height:105px;gap:9px;color:#193453;transition:border-color .12s ease}
+.tms-command-tile:hover{border-color:#88b8f6;background:#f0f6ff}
+.tms-command-tile>span{font-size:12px;color:#607997;font-weight:700;line-height:1.4}
+.tms-command-tile>strong{font-size:27px;color:#1768f5;letter-spacing:-.03em;overflow-wrap:anywhere}
+.tms-command-tile:focus-visible,.tms-command-exception:focus-visible{outline:3px solid #efc22d;outline-offset:3px}
+.tms-command-exceptions{padding:17px!important;background:#fbfcff!important;border:1px solid #e2eaf5!important}
+.tms-command-exceptions>div{display:grid;gap:7px;margin-top:12px}
+.tms-command-exceptions p{margin:0}
+.tms-command-exception{display:grid;grid-template-columns:130px minmax(0,1fr) auto;align-items:center;gap:11px;background:#fff;border:1px solid #e2eaf5;border-radius:9px;padding:12px;color:#24435f;font-size:12px}
+.tms-command-exception strong{color:#1e3d63}
+.tms-command-exception small{color:#7187a1;font-size:11px}
+.tms-command-finance{display:grid;gap:12px}
+.tms-command-finance .tms-command-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.tms-command-finance .tms-command-tile>strong{font-size:23px}
+@media(max-width:1150px){.tms-command-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){.tms-command-exception{grid-template-columns:1fr}.tms-command-finance .tms-command-grid{grid-template-columns:1fr}}
+@media(max-width:480px){.tms-command-grid{grid-template-columns:1fr 1fr;gap:8px}.tms-command-tile{min-height:95px;padding:12px}.tms-command-tile>strong{font-size:22px}}
