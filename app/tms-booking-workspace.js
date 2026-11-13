@@ -43,27 +43,56 @@ const route=$('div','booking-route');shipment.append(route);for(const [name,plac
 const review=section('Booking Review & Audit Trail','Shipment activity and approvals.');const audit=$('div','booking-route');review.append(audit);for(const e of quote.history||[])audit.append($('div','booking-audit',new Date(e.at).toLocaleString()+' · '+e.event));const actions=$('div','quote-form-actions');review.append(actions);
 let saving=false;
 async function persist(stage){
-if(saving)throw Error('Save already in progress');
-if(!quote.shipper?.trim()||!quote.origin?.trim()||!quote.destination?.trim())throw Error('Customer, origin and destination are required');
-if(!draft.loadNumber?.trim())draft.loadNumber='LOAD-'+Date.now();
-saving=true;
-try{
-const next={...draft,stage,updated:new Date().toISOString(),events:[...(draft.events||[]),{at:new Date().toISOString(),event:stage}]};
-const original=realQuote?await sb.from('tms_quotes').select('id').eq('workspace_id',workspace).eq('quote_number',id).single():null;
-if(original?.error)throw original.error;
-const timestamp=v=>{if(!v)return null;const dt=new Date(v);return Number.isNaN(dt.getTime())?null:dt.toISOString()};
-const payload={workspace_id:workspace,business_role:'broker',source_quote_id:original?.data?.id||null,booking_data:next,load_number:next.loadNumber,status:stage==='Draft'?'draft':'booked',customer_name:quote.shipper,carrier_name:next.carrier||null,equipment_type:quote.equipment||null,origin_city:quote.origin,origin_state:quote.originState||null,destination_city:quote.destination,destination_state:quote.destinationState||null,pickup_at:timestamp(quote.pickup),delivery_at:timestamp(quote.delivery),customer_rate:realQuote?sell:Number(quote.customerLinehaul)||0,carrier_rate:Number(next.carrierRate)||0,notes:next.instructions||next.notes||null,updated_at:new Date().toISOString()};
-const response=draft.loadId?await sb.from('tms_loads').update(payload).eq('id',draft.loadId).eq('workspace_id',workspace).select('id').single():await sb.from('tms_loads').insert({...payload,created_by:user.id}).select('id').single();
-if(response.error)throw response.error;
-const loadId=response.data.id;
-const extra=(quote.stops||[]).filter(x=>x.city||x.facility).map(x=>({type:/pickup/i.test(x.type||'')?'pickup':/deliver/i.test(x.type||'')?'delivery':'intermediate',facility:x.facility||'',city:x.city||'',state:x.state||'',appointment:x.appointment||'',instructions:x.instructions||''}));
-const chain=[{type:'pickup',facility:quote.originFacility||'',city:quote.origin||'',state:quote.originState||'',appointment:quote.pickup||''},...extra,{type:'delivery',facility:quote.destinationFacility||'',city:quote.destination||'',state:quote.destinationState||'',appointment:quote.delivery||''}];
-const stopRows=chain.map((x,i)=>({workspace_id:workspace,load_id:loadId,stop_order:i+1,stop_type:x.type,facility_name:x.facility,address_line:'',city:x.city,region:x.state,postal_code:'',appointment_at:timestamp(x.appointment),instructions:x.instructions||''}));
-const stopsWrite=await sb.from('tms_stops').upsert(stopRows,{onConflict:'load_id,stop_order'});if(stopsWrite.error)throw Error('Load saved but stops could not be saved: '+stopsWrite.error.message);
-const staleStops=await sb.from('tms_stops').delete().eq('workspace_id',workspace).eq('load_id',loadId).gt('stop_order',stopRows.length);if(staleStops.error)throw Error('Load saved but removed stops could not be cleaned up: '+staleStops.error.message);
-Object.assign(draft,next,{loadId});
-return draft.loadId;
-}finally{saving=false}
+ if(saving)throw Error('Save already in progress');
+ if(!quote.shipper?.trim()||!quote.origin?.trim()||!quote.destination?.trim())throw Error('Customer, origin and destination are required');
+ if(!realQuote&&stage!=='Draft')throw Error('Open an accepted saved quote before booking a load');
+ if(!draft.loadNumber?.trim())draft.loadNumber='LOAD-'+Date.now();
+ saving=true;
+ try{
+  const wantsBooking=stage!=='Draft';
+  const next={...draft,stage,updated:new Date().toISOString(),events:[...(draft.events||[]),{at:new Date().toISOString(),event:stage}]};
+  const original=realQuote?await sb.from('tms_quotes').select('id,status').eq('workspace_id',workspace).eq('quote_number',id).single():null;
+  if(original?.error)throw original.error;
+  if(wantsBooking&&original?.data?.status!=='Accepted')throw Error('Quote must be accepted before booking');
+  const customerQuery=await sb.from('tms_partners').select('id,name,partner_type').eq('workspace_id',workspace).in('partner_type',['customer','shipper']).ilike('name',quote.shipper.trim()).limit(10);
+  if(customerQuery.error)throw customerQuery.error;
+  const customers=(customerQuery.data||[]).filter(p=>p.name.trim().toLowerCase()===quote.shipper.trim().toLowerCase());
+  if(wantsBooking&&customers.length!==1)throw Error('Link one matching customer or shipper in TMS Partner CRM before booking this quote.');
+  const carrier=carrierRecords.find(x=>x.id===draft.carrierCrmId||x.dbId===draft.carrierCrmId);
+  if(wantsBooking&&!carrier)throw Error('Select a saved carrier partner before booking.');
+  if(wantsBooking&&!(Number(next.carrierRate)>0))throw Error('An agreed carrier rate is required.');
+  const timestamp=v=>{if(!v)return null;const dt=new Date(v);return Number.isNaN(dt.getTime())?null:dt.toISOString()};
+  const previousStatus=storedLoad?.status||'draft';
+  if(draft.loadId&&['in_transit','dispatched','delivered','invoiced','closed'].includes(previousStatus))throw Error('This load is already in execution. Update it from Shipment Execution instead.');
+  const payload={workspace_id:workspace,business_role:'broker',source_quote_id:original?.data?.id||null,booking_data:next,
+   load_number:next.loadNumber,status:previousStatus==='booked'?'booked':'draft',
+   customer_name:quote.shipper,carrier_name:next.carrier||'',equipment_type:quote.equipment||'',
+   customer_partner_id:customers.length===1?customers[0].id:null,carrier_partner_id:carrier?.dbId||null,
+   origin_city:quote.origin,origin_state:quote.originState||'',destination_city:quote.destination,destination_state:quote.destinationState||'',
+   pickup_at:timestamp(quote.pickup),delivery_at:timestamp(quote.delivery),
+   customer_rate:realQuote?sell:Number(quote.customerLinehaul)||0,carrier_rate:Number(next.carrierRate)||0,
+   notes:next.instructions||next.notes||'',updated_at:new Date().toISOString()};
+  const response=draft.loadId?
+   await sb.from('tms_loads').update(payload).eq('id',draft.loadId).eq('workspace_id',workspace).select('id,status').single():
+   await sb.from('tms_loads').insert({...payload,status:'draft',created_by:user.id}).select('id,status').single();
+  if(response.error)throw response.error;
+  const loadId=response.data.id;
+  draft.loadId=loadId;
+  const extra=(quote.stops||[]).filter(x=>x.city||x.facility).map(x=>({type:/pickup/i.test(x.type||'')?'pickup':/deliver/i.test(x.type||'')?'delivery':'intermediate',facility:x.facility||'',city:x.city||'',state:x.state||'',appointment:x.appointment||'',instructions:x.instructions||''}));
+  const chain=[{type:'pickup',facility:quote.originFacility||'',city:quote.origin||'',state:quote.originState||'',appointment:quote.pickup||''},...extra,{type:'delivery',facility:quote.destinationFacility||'',city:quote.destination||'',state:quote.destinationState||'',appointment:quote.delivery||''}];
+  const stopRows=chain.map((x,i)=>({workspace_id:workspace,load_id:loadId,stop_order:i+1,stop_type:x.type,facility_name:x.facility,address_line:'',city:x.city,region:x.state,postal_code:'',appointment_at:timestamp(x.appointment),instructions:x.instructions||''}));
+  const stopsWrite=await sb.from('tms_stops').upsert(stopRows,{onConflict:'load_id,stop_order'});
+  if(stopsWrite.error)throw Error('Draft load saved but stops could not be saved: '+stopsWrite.error.message);
+  const staleStops=await sb.from('tms_stops').delete().eq('workspace_id',workspace).eq('load_id',loadId).gt('stop_order',stopRows.length);
+  if(staleStops.error)throw Error('Draft load saved but removed stops could not be cleaned up: '+staleStops.error.message);
+  if(wantsBooking&&response.data.status==='draft'){
+   const booked=await sb.rpc('tms_advance_load',{p_workspace_id:workspace,p_load_id:loadId,p_next_status:'booked'});
+   if(booked.error)throw Error('Draft and stops saved, but booking prerequisites failed: '+booked.error.message);
+  }
+  Object.assign(draft,next,{loadId});
+  if(wantsBooking)draft.stage='Booked';
+  return draft.loadId;
+ }finally{saving=false}
 }
 
 const ratePanel=$('section','panel');primary.append(ratePanel);ratePanel.append($('h2','','Carrier Rate Confirmation'),$('p','','Save a carrier assignment to unlock rate confirmation options.'));const rateActions=$('div','quote-form-actions');ratePanel.append(rateActions);const termsLink=$('a','wf-action','Edit Legal Terms');termsLink.href='tms-document-settings.html?portal=broker&workspace='+encodeURIComponent(workspace);rateActions.append(termsLink);const rateStatus=$('p','booking-hint','Assign a carrier, enter the rate, and save the load.');ratePanel.append(rateStatus);const rateButton=$('button','quote-btn primary','Rate Confirmation');rateActions.append(rateButton);
@@ -75,7 +104,7 @@ const output=$('p','booking-hint','');review.append(output);
 function action(label,fn,cls){const b=$('button','quote-btn '+cls,label);b.addEventListener('click',fn);actions.append(b)}
 action('Save Booking Draft',async()=>{if(draft.carrier.trim()&&Number(draft.carrierRate)>0&&draft.carrierType!=='Broker'){draft.carrierSaved=true;syncRateButton();rateStatus.textContent='Rate confirmation available for saved loads with carrier and agreed rate.'}try{await persist('Draft');output.textContent='Load saved to workspace.';syncRateButton();const open=$('a','booking-link','View Saved Load');open.href='tms-workflow-loads.html?portal=broker&workspace='+encodeURIComponent(workspace)+'&id='+encodeURIComponent(draft.loadId);output.after(open)}catch(error){output.textContent='Save failed: '+error.message}},'secondary');
 function dispatchReviewIssue(){const carriers=carrierRecords;const c=carriers.find(x=>x.id===draft.carrierCrmId);if(!c)return 'Select an existing FMCSA carrier from Carrier CRM.';if(c.carrierType==='Broker'||c.entityType==='Broker')return 'Broker-only entities cannot haul shipments.';const today=new Date().toISOString().slice(0,10);if(!c.insuranceFileName)return 'Insurance certificate required.';if(!c.insuranceReviewed)return 'Insurance certificate must be reviewed.';if(!c.insuranceEffective||c.insuranceEffective>today)return 'Insurance is not yet effective.';if(!c.insuranceExpires||c.insuranceExpires<today)return 'Insurance is expired or missing its expiration date.';return ''}
-action('Mark Ready for Dispatch Review',async()=>{const issue=dispatchReviewIssue();if(issue){output.textContent='Dispatch review blocked: '+issue;return}if(!draft.carrier.trim()||!(Number(draft.carrierRate)>0)||draft.carrierType==='Broker'){output.textContent='Select a carrier and enter an agreed rate first.';return}draft.carrierSaved=true;try{await persist('Dispatch Ready')}catch(error){output.textContent='Save failed: '+error.message;return}syncRateButton();rateStatus.textContent='Rate confirmation available.';output.textContent='Load saved as dispatch ready.'},'primary');
+action('Mark Ready for Dispatch Review',async()=>{const issue=dispatchReviewIssue();if(issue){output.textContent='Dispatch review blocked: '+issue;return}if(!draft.carrier.trim()||!(Number(draft.carrierRate)>0)||draft.carrierType==='Broker'){output.textContent='Select a carrier and enter an agreed rate first.';return}draft.carrierSaved=true;try{await persist('Dispatch Ready')}catch(error){output.textContent='Save failed: '+error.message;return}syncRateButton();rateStatus.textContent='Rate confirmation available.';output.textContent='Load booked successfully. Assign and release dispatch from the Dispatch Board.'},'primary');
 const side=$('section','panel');aside.append(side);side.append($('h2','','Handoff Summary'));const financial=$('div');side.append(financial);const financeNote=$('p','booking-hint','Gross profit excludes unrecorded expenses.');side.append(financeNote);function renderMath(){financial.replaceChildren();for(const [name,val]of [['Customer revenue',sell],['Agreed carrier cost',draft.carrierRate],['Estimated gross profit',sell-(Number(draft.carrierRate)||0)]]){const line=$('div','quote-summary-row');line.append($('span','',name),$('strong','',money(val)));financial.append(line)}}renderMath();
 if(preview){for(const control of container.querySelectorAll('input,textarea,select,button')){control.disabled=true;control.title='Open an accepted quote to enable this control'}for(const link of container.querySelectorAll('a[href*="quote=—"],a[href*="quote=%E2%80%94"]')){link.removeAttribute('href');link.setAttribute('aria-disabled','true')}}
 })();
