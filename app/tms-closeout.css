@@ -15,3 +15,22 @@
 .co-dialog-actions button:disabled{opacity:.5;cursor:not-allowed}
 #coPayError{color:#a22d45!important;font-weight:700}
 @media(max-width:600px){.co-dialog{padding:17px}.co-dialog-actions{flex-wrap:wrap}}
+
+/* WorkRelief financial reporting within the existing TMS closeout workspace */
+.co-report-controls{display:flex;gap:12px;flex-wrap:wrap;align-items:end;margin:20px 0 14px}
+.co-report-controls label{display:grid;gap:6px;font-size:12px;font-weight:700;color:#47617e}
+.co-report-controls input{font:inherit;border:1px solid #cad8e9;border-radius:9px;padding:10px 12px;color:#172b47;background:#fff;min-width:160px}
+.co-button-secondary{background:#fff!important;border:1px solid #b8d1ef!important;color:#1768f5!important}
+.co-report-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:18px 0 24px}
+.co-report-metrics>div{border:1px solid #dce7f5;background:#f8fbff;border-radius:12px;padding:18px;min-width:0}
+.co-report-metrics span{display:block;font-size:12px;color:#5c7797;font-weight:700}
+.co-report-metrics strong{display:block;margin-top:9px;font-size:24px;line-height:1.2;overflow-wrap:anywhere;color:#183759}
+#coReporting h3{font-size:17px;margin:23px 0 8px}
+.co-report-caption{font-size:12px;color:#6e839b;margin:0 0 13px}
+#coReportState{font-size:12px;font-weight:700;min-height:20px}
+.co-report-link{display:inline-block;border-radius:8px;background:#eaf2ff;color:#1768f5;font-size:12px;font-weight:700;padding:8px 12px;text-decoration:none;white-space:nowrap}
+.co-aging{min-width:870px!important}
+.co-aging tbody td{font-weight:700;color:#203d60}
+.co-report-controls button:focus-visible,.co-report-controls input:focus-visible,.co-report-link:focus-visible{outline:3px solid #efbe24;outline-offset:2px}
+@media(max-width:900px){.co-report-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.co-report-metrics{grid-template-columns:1fr}.co-report-controls label,.co-report-controls input{width:100%}}
