@@ -30,3 +30,13 @@
 #serviceError,#serviceCompleteError{font-weight:700;color:#ad2d46}
 .service-panel button:focus-visible,.fleet-dialog button:focus-visible,.fleet-dialog input:focus-visible,.fleet-dialog select:focus-visible,.fleet-dialog textarea:focus-visible{outline:3px solid #eebd20;outline-offset:2px}
 @media(max-width:800px){#workcontent .service-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.fleet-form-grid{grid-template-columns:1fr}.fleet-dialog{padding:17px}}
+
+/* Qualification overview follows the existing Fleet & Drivers design */
+#workcontent .qualification-panel{margin-top:18px}
+#workcontent .qualification-panel h2{font-size:19px;color:#1c395b;margin:0 0 8px}
+#workcontent .qualification-panel .service-head p{max-width:970px}
+#workcontent .qualification-panel table{min-width:980px}
+#workcontent .qualification-panel table td:nth-child(6){font-weight:750;color:#315b83}
+#workcontent .qualification-panel td button{white-space:nowrap}
+#workcontent .qualification-panel .service-help{max-width:950px}
+#qualificationError{color:#a92744;font-weight:750}
