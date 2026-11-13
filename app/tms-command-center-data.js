@@ -27,6 +27,46 @@ const elements=new Map();
 for(const [label,key,file] of cards){const link=E('a',undefined,'tms-command-tile');link.href=file;link.append(E('span',label),E('strong','—'));grid.append(link);elements.set(key,{link,number:link.querySelector('strong')})}
 const attention=E('section',undefined,'panel tms-command-exceptions');live.append(attention);attention.append(E('h3','Recent Shipment Exceptions'));
 const exceptions=E('div');attention.append(exceptions);
+const compliance=E('section',undefined,'panel tms-command-alerts');live.append(compliance);
+const alertsHeader=E('div',undefined,'tms-alerts-heading');compliance.append(alertsHeader);
+const alertsTitle=E('div');alertsTitle.append(E('h3','Compliance & Operations Alerts'),E('p','Live in-app attention queue, with links to the existing TMS workflows. Alerts are not email or SMS notifications.'));alertsHeader.append(alertsTitle);
+const alertsReload=E('button','Refresh Alerts','tms-alert-refresh');alertsReload.type='button';alertsHeader.append(alertsReload);
+const alertCounts=E('div',undefined,'tms-alerts-stats');compliance.append(alertCounts);
+const alertStats=[['Critical','critical'],['Warnings','warning'],['Driver Qualification','driver'],['Maintenance','maintenance'],['Delivery / POD','delivery'],['Shipment Exceptions','shipment']];
+const alertStatsEls={};for(const [label,key] of alertStats){const item=E('div',undefined,'tms-alert-stat');item.append(E('span',label),E('strong','—'));alertCounts.append(item);alertStatsEls[key]=item.querySelector('strong')}
+const alertTools=E('div',undefined,'tms-alert-tools');compliance.append(alertTools);
+const alertFilter=E('select');alertFilter.setAttribute('aria-label','Filter operational alerts');
+for(const [value,label] of [['all','All Alerts'],['critical','Critical Alerts'],['warning','Warnings'],['driver','Driver Qualifications'],['maintenance','Maintenance'],['delivery','Missing POD'],['shipment','Shipment Exceptions']]){const option=E('option',label);option.value=value;alertFilter.append(option)}alertTools.append(alertFilter);
+const alertsState=E('p','Loading alerts…','tms-alert-state');compliance.append(alertsState);
+const alertsList=E('div',undefined,'tms-alerts-list');compliance.append(alertsList);
+let liveAlerts=[],alertsWorkspace='';
+const alertLinks={driver:'tms-fleet.html',maintenance:'tms-fleet.html',delivery:'tms-load.html',shipment:'tms-load.html'};
+function renderAlerts(){
+ alertsList.replaceChildren();const selected=alertFilter.value;
+ const rows=liveAlerts.filter(x=>selected==='all'||x.category===selected||x.severity===selected);
+ if(!rows.length){alertsList.append(E('p','No alerts match this selection.'));return}
+ for(const item of rows){
+  const row=E('a',undefined,'tms-alert-row');
+  const file=alertLinks[item.category]||'tms-shell-broker.html';
+  row.href=href(file,['delivery','shipment'].includes(item.category)?{id:item.resource_id}:{});
+  const indicator=E('span',item.severity==='critical'?'Critical':'Attention','tms-alert-severity '+(item.severity==='critical'?'tms-alert-critical':'tms-alert-warning'));row.append(indicator);
+  const description=E('span',undefined,'tms-alert-description');description.append(E('strong',item.title),E('small',item.detail));row.append(description);
+  row.append(E('span',item.due_on?('Due: '+item.due_on):'Open Workflow','tms-alert-date'));alertsList.append(row);
+ }
+}
+async function reloadAlerts(){
+ if(!alertsWorkspace)return;
+ alertsReload.disabled=true;alertsState.textContent='Checking current compliance and operational events…';
+ try{
+  const {data,error}=await sb.rpc('tms_compliance_alerts',{p_workspace:alertsWorkspace});if(error)throw error;
+  const counters=data?.counts||{};for(const [key,node] of Object.entries(alertStatsEls))node.textContent=String(counters[key]??0);
+  liveAlerts=Array.isArray(data?.items)?data.items:[];
+  renderAlerts();const count=Number(counters.total||0);
+  alertsState.textContent='Showing '+liveAlerts.length+' of '+count+' current alert events (limit 100). Refresh to recheck. No external alerts are sent.';
+ }catch(error){alertsState.textContent='Unable to load operational alerts: '+(error.message||'Unknown error');alertsList.replaceChildren();}
+ finally{alertsReload.disabled=false}
+}
+alertFilter.onchange=renderAlerts;alertsReload.onclick=reloadAlerts;
 const finance=E('div',undefined,'tms-command-finance');live.append(finance);
 const financeTitle=E('h3','Financial Overview');finance.append(financeTitle);
 const financeStats=E('div',undefined,'tms-command-grid');finance.append(financeStats);
@@ -51,10 +91,11 @@ const allowed=[...new Set([...(m.data||[]).map(x=>x.workspace_id),...(w.data||[]
 if(requested&&!allowed.includes(requested))throw Error('Access denied to this workspace');
 workspace=requested||(allowed.length===1?allowed[0]:'');
 if(!workspace)throw Error('Select an authorized WorkRelief workspace from My Applications.');
-setLinks();
+setLinks();alertsWorkspace=workspace;
 const [data,financeResult]=await Promise.all([sb.rpc('tms_command_center',{p_workspace:workspace}),sb.rpc('tms_financial_reporting',{p_workspace_id:workspace,p_from:null,p_to:null})]);
 if(data.error)throw data.error;
 render(data.data,financeResult.error?null:financeResult.data);
+await reloadAlerts();
 status('Live workspace operations.'+(financeResult.error?' Financial summary unavailable: '+financeResult.error.message:''));
 }catch(err){status('Unable to load command center: '+(err.message||'Unknown error'),true)}
 })();
