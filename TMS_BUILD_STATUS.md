@@ -1,6 +1,6 @@
 # WorkRelief Enterprise TMS — Build Completion & Test Readiness
 
-Last reviewed: 2026-11-13 (driver workspace increment)
+Last reviewed: 2026-11-13 (partner shipment self-service increment)
 Repository: filings4u/app.workreliefapps.com
 Database: existing WorkRelief Supabase project
 
@@ -27,6 +27,8 @@ Do not declare the TMS ready for user acceptance testing merely because pages ex
 - [x] Driver trip file submission interface and private bucket: assigned drivers can submit PDF/JPG/PNG files, view their own submissions, and see pending/accepted/rejected review status.
 - [x] Shipment Execution staff review queue added: assigned-trip submissions can be viewed privately and accepted/rejected with reviewer details.
 - [x] Unreviewed driver POD submissions remain distinct from official load POD documents; staff review alone never automatically satisfies financial POD prerequisites.
+- [x] Initial customer/shipper/carrier read-only self-service: isolated confirmed partner accounts see only loads linked by partner ID, without pricing or internal dispatch details.
+- [x] TMS owner/admin partner-access page grants and revokes partner shipment access without adding partner users to general workspace membership.
 
 
 ## Build scope that still needs implementation or end-to-end proof
@@ -41,7 +43,7 @@ Do not declare the TMS ready for user acceptance testing merely because pages ex
 - [ ] Role matrix testing for owner/admin/member/read-only roles and cross-tenant denial.
 
 ### Required enterprise capabilities from the original TMS scope
-- [ ] Confirm and finish customer/shipper and carrier self-service experiences, including controlled invitations and permissions.
+- [ ] Customer/shipper and carrier read-only shipment access and administrator links are implemented. Still required: account invitation onboarding, status updates or document exchange where applicable, role-isolation browser tests, and external partner acceptance.
 - [ ] Driver document receipt/upload is implemented with staff review; remaining: account invitation UX, authenticated browser permission testing, and a controlled manual process for publishing an accepted driver POD into official load documents.
 - [ ] ELD/HOS integration or documented manual workflow with explicit verified-vs-unverified operational controls.
 - [ ] Actual transportation tracking integration (GPS/telematics), beyond manually recorded events, if part of the release scope.
