@@ -9,7 +9,7 @@ const status=(value,error=false)=>{if(note){note.textContent=value;note.style.co
 let workspace='';
 function href(path,params={}){return path+'?'+new URLSearchParams({portal:'broker',workspace,...params})}
 const live=E('section',undefined,'panel tms-command-summary');live.setAttribute('aria-label','TMS live operations overview');
-const host=root.querySelector('.broker-layout')||root;root.insertBefore(live,host);
+const host=root.querySelector('.broker-layout');if(host)root.insertBefore(live,host);else root.prepend(live);
 live.append(E('h2','Enterprise Operations Pulse'));
 const caption=E('p','Live data from the selected workspace. No simulated activity or demo numbers.');live.append(caption);
 const grid=E('div',undefined,'tms-command-grid');live.append(grid);
