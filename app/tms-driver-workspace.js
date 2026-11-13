@@ -4,7 +4,7 @@ const $=id=>document.getElementById(id),E=(tag,value)=>{const node=document.crea
 let trips=[],selected=null,saving=false;const state=(message,error=false)=>{$('driverState').textContent=message;$('driverState').style.color=error?'#a92d48':'#5e7693'};
 function date(value){return value?new Date(value).toLocaleString():'Not scheduled'}
 function render(){const host=$('driverTrips');host.replaceChildren();
-if(!trips.length){host.append(E('div','No active or recent trips are linked to your signed-in driver account. Ask your WorkRelief fleet administrator to link your account and assign a trip.')).className='tms-driver-empty';return}
+if(!trips.length){const empty=E('div','No active or recent trips are linked to your signed-in driver account. Ask your WorkRelief fleet administrator to link your account and assign a trip.');empty.className='tms-driver-empty';host.append(empty);return}
 for(const t of trips){const card=E('article');card.className='tms-driver-card';
 const tag=E('span',t.assignment_status||'Assigned');tag.className='tms-driver-tag';card.append(tag,E('h2',t.load_number||'Shipment'));
 const route=E('div',[(t.origin_city||'Pickup'),t.origin_state||''].filter(Boolean).join(', ')+' → '+[(t.destination_city||'Delivery'),t.destination_state||''].filter(Boolean).join(', '));route.className='tms-driver-route';card.append(route);
