@@ -1,1 +1,17 @@
 .closeout-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:3px 0 4px}.closeout-metrics>div{background:#fff;border:1px solid #dce6f2;border-radius:13px;padding:20px}.closeout-metrics span{display:block;font-size:12px;font-weight:700;color:#6c809b}.closeout-metrics strong{display:block;font-size:29px;color:#142d4d;margin-top:6px}.co-head{display:flex;justify-content:space-between;align-items:start;gap:15px;flex-wrap:wrap}.co-head h2{margin:0}.co-head p{margin:5px 0 0}.co-button,.co-actions button{border:0;border-radius:9px;background:#1768f5;color:#fff;padding:10px 14px;font-weight:750;cursor:pointer;font:inherit}.co-button:disabled,.co-actions button:disabled{opacity:.5;cursor:not-allowed}.co-toolbar{display:flex;gap:11px;flex-wrap:wrap;margin:18px 0}.co-toolbar input,.co-toolbar select{font:inherit;border:1px solid #cbd9eb;padding:11px;border-radius:9px;background:#fff;color:#1c3856}.co-toolbar input{min-width:230px;flex:1}.co-scroll{overflow:auto}.co-scroll table{width:100%;border-collapse:collapse;min-width:1000px}.co-scroll th,.co-scroll td{padding:14px 10px;border-bottom:1px solid #e8eef6;text-align:left;font-size:12px;vertical-align:top}.co-scroll th{color:#637895;font-size:11px}.co-pill{display:inline-block;border-radius:25px;padding:5px 10px;color:#235f9b;background:#eaf2ff;font-weight:750;text-transform:capitalize}.co-issues{display:grid;gap:4px;margin-top:7px;color:#a14b32;font-size:11px}.co-actions{display:flex;flex-wrap:wrap;gap:7px;align-items:center}.co-actions a{display:inline-flex;background:#eef4fd;border-radius:8px;color:#1768f5;padding:9px 11px;font-weight:750}.co-empty{padding:30px;text-align:center;color:#7386a0}.co-disclaimer{color:#71839b;font-size:12px}#closeoutState{min-height:22px;color:#586e8b}.co-actions button:focus-visible,.co-toolbar input:focus-visible,.co-toolbar select:focus-visible{outline:3px solid #f5b800;outline-offset:2px}@media(max-width:900px){.closeout-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:520px){.closeout-metrics{gap:8px}.closeout-metrics>div{padding:15px}.co-toolbar input{min-width:160px}}
+/* Carrier settlement and external payment reconciliation stay within Financial Closeout. */
+.co-history{margin-top:19px;padding-top:14px;border-top:1px solid #e7eef7}
+.co-history h3{font-size:15px;margin:0 0 11px;color:#203a59}
+.co-history p{font-size:12px;color:#6c809b}
+.co-dialog{width:min(540px,95vw);border:0;border-radius:15px;padding:26px;box-shadow:0 25px 90px #10254855;color:#183250;font:14px/1.5 Inter,system-ui,sans-serif}
+.co-dialog::backdrop{background:#081d3c99}
+.co-dialog h2{margin:0 0 10px;font-size:21px}
+.co-dialog p{font-size:12px;color:#68809a}
+.co-dialog label{display:grid;gap:6px;margin-top:13px;font-weight:700;color:#304d70;font-size:12px}
+.co-dialog input,.co-dialog select,.co-dialog textarea{width:100%;font:inherit;border:1px solid #cbd9ed;border-radius:9px;padding:11px;color:#203a5c}
+.co-dialog-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:20px}
+.co-dialog-actions button{border:1px solid #1768f5;background:#1768f5;color:#fff;padding:11px 15px;border-radius:9px;font:inherit;font-weight:750;cursor:pointer}
+.co-dialog-actions button:first-child{border-color:#cedbef;background:#fff;color:#365170}
+.co-dialog-actions button:disabled{opacity:.5;cursor:not-allowed}
+#coPayError{color:#a22d45!important;font-weight:700}
+@media(max-width:600px){.co-dialog{padding:17px}.co-dialog-actions{flex-wrap:wrap}}
