@@ -31,13 +31,13 @@ function renderSettlements(){
    tr.append(E('td',value));
   }
   const actions=E('td');actions.className='co-actions';
-  if(canApprove&&!approved&&bill.status!=='void'&&bill.status!=='paid'&&load?.hasPod){
+  if(canApprove&&!approved&&bill.status==='issued'&&load?.hasPod){
    const button=E('button','Approve Settlement');button.type='button';button.disabled=busy;button.onclick=()=>approveSettlement(bill);actions.append(button);
   }
   if(canApprove&&approved&&balance>0&&bill.status!=='void'&&bill.status!=='paid'){
    const button=E('button','Record External Payment');button.type='button';button.disabled=busy;button.onclick=()=>openPayment(bill);actions.append(button);
   }
-  if(bill.status==='paid'&&balance===0)actions.append(E('span','Paid in full'));
+  if(bill.status==='draft'){const view=E('a','Review & Issue Bill');view.href='tms-invoice-view.html?'+new URLSearchParams({portal:'carrier',workspace:ws,id:bill.id});actions.append(view)}if(bill.status==='paid'&&balance===0)actions.append(E('span','Paid in full'));
   if(bill.status==='void')actions.append(E('span','Voided'));
   if(load){const link=E('a','View Load');link.href=detailsUrl(load.id);actions.append(link)}
   tr.append(actions);host.append(tr);
