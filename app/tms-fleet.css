@@ -65,3 +65,14 @@
 #driverDocumentsPanel .qualification-audit-event span{color:#70849c}
 #driverDocumentsPanel .qualification-audit-event p{width:100%;margin:0;color:#627b98}
 @media(max-width:1050px){#driverDocumentsPanel .qual-doc-grid{grid-template-columns:1fr}}
+
+/* Driver account linking is part of Fleet & Drivers, not a separate portal. */
+#driverAccessPanel[hidden]{display:none!important}
+#driverAccessPanel .driver-link-form{display:flex;align-items:end;gap:12px;flex-wrap:wrap;margin:18px 0}
+#driverAccessPanel .driver-link-form label{display:grid;gap:6px;flex:1;min-width:205px;font-size:12px;font-weight:750;color:#45617f}
+#driverAccessPanel .driver-link-form input,#driverAccessPanel .driver-link-form select{font:inherit;padding:11px 12px;border:1px solid #cbd9eb;border-radius:9px;color:#1d3b60;background:#fff;min-width:0;width:100%}
+#driverAccessPanel .driver-link-form button,#driverAccessPanel .driver-open-link{padding:11px 15px;border:1px solid #1768f5;background:#1768f5;border-radius:9px;color:#fff;font-size:12px;font-weight:750;cursor:pointer}
+#driverAccessPanel .driver-open-link{display:inline-flex;align-items:center;white-space:nowrap}
+#driverAccessPanel .driver-link-form button:disabled{opacity:.55;cursor:not-allowed}
+#driverAccessPanel #driverLinkStatus{font-size:12px;min-height:18px;color:#637b97}
+#driverAccessPanel :is(a,input,select,button):focus-visible{outline:3px solid #f1bf2a;outline-offset:2px}
