@@ -1,1 +1,32 @@
 #workcontent .metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:8px 0 22px}#workcontent .metrics>div{background:#fff;border:1px solid #dfe6f1;border-radius:14px;padding:20px}#workcontent .metrics span{display:block;color:#68809c;font-size:12px;font-weight:650}#workcontent .metrics strong{display:block;color:#173451;font-size:30px;margin-top:6px}#workcontent .tabs{display:flex;gap:10px;margin:4px 0 15px}#workcontent .tabs button{background:#fff;color:#41577b;border:1px solid #dbe5f2;padding:11px 16px;border-radius:9px;font-weight:750;cursor:pointer}#workcontent .tabs button[aria-selected=true]{background:#1768f5;color:#fff;border-color:#1768f5}#workcontent .tools{display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap}#workcontent .tools input{flex:1;min-width:170px;border:1px solid #d2dfef;border-radius:9px;padding:11px;font:inherit}#workcontent .tools button{border:0;background:#1768f5;color:white;padding:11px 15px;border-radius:9px;font-weight:700;cursor:pointer}#workcontent .table-scroll{overflow-x:auto}#workcontent table{width:100%;border-collapse:collapse;min-width:660px}#workcontent td,#workcontent th{text-align:left;border-bottom:1px solid #e8edf5;padding:13px 10px}#workcontent th{font-size:11px;color:#667a97}#workcontent td button{border:0;border-radius:8px;background:#1768f5;color:#fff;font-size:12px;padding:7px 11px;cursor:pointer}#workcontent #status{min-height:22px;color:#627895}#workcontent .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}#workspaceLabel{font-size:12px;color:#637a99}#editor{border:0;border-radius:16px;width:min(560px,95vw);padding:27px;color:#14294b;font:14px Inter,system-ui,sans-serif;box-shadow:0 24px 80px #10284b45}#editor::backdrop{background:#1024489c}#editor .fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}#editor .fields label{display:grid;gap:5px;font-weight:650;color:#435a79}#editor .fields input,#editor .fields select{width:100%;border:1px solid #cedbef;border-radius:8px;padding:10px;font:inherit}#editor .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:22px}#editor button{background:#1768f5;color:white;border:1px solid #1768f5;padding:10px 14px;border-radius:9px;font-weight:700;cursor:pointer}#editor button.secondary{background:#fff;color:#365273;border-color:#cbd9eb}#editor #formError{color:#af2842}#editor button:disabled{opacity:.5;cursor:not-allowed}@media(max-width:800px){#workcontent .metrics{grid-template-columns:repeat(2,1fr);gap:9px}#workcontent .metrics>div{padding:15px}#editor .fields{grid-template-columns:1fr}}
+/* Maintenance controls live inside the existing Fleet & Drivers module */
+#workcontent .service-panel{margin-top:18px}
+#workcontent .service-head{display:flex;justify-content:space-between;align-items:start;gap:16px;flex-wrap:wrap}
+#workcontent .service-head h2{font-size:19px;margin:0 0 8px;color:#193756}
+#workcontent .service-head p{max-width:830px;margin:0;color:#6a809b}
+#workcontent .service-head button,.service-actions button{border:0;background:#1768f5;color:#fff;padding:10px 14px;border-radius:9px;font:inherit;font-weight:750;cursor:pointer}
+#workcontent .service-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:22px 0}
+#workcontent .service-stats>div{border:1px solid #dce7f4;background:#f8fbff;border-radius:12px;padding:18px;min-width:0}
+#workcontent .service-stats span{display:block;color:#637d9a;font-size:12px;font-weight:700}
+#workcontent .service-stats strong{display:block;font-size:25px;margin-top:6px;color:#1c3857}
+#workcontent .service-table{min-width:900px}
+#workcontent .service-table td{text-transform:none}
+#workcontent .service-actions{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+#workcontent .service-actions button{padding:8px 10px;font-size:12px;white-space:nowrap}
+#workcontent .service-actions span{color:#5e748e;font-size:12px}
+#workcontent .service-help{font-size:12px;color:#6e839a;margin:17px 0 0}
+.fleet-dialog{width:min(620px,95vw);border:0;border-radius:16px;padding:26px;color:#173452;font:14px/1.5 Inter,system-ui,sans-serif;box-shadow:0 25px 90px #09224855}
+.fleet-dialog::backdrop{background:#09224899}
+.fleet-dialog h2{margin:0 0 10px;font-size:21px}
+.fleet-dialog>form>p{font-size:13px;color:#65809c}
+.fleet-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.fleet-form-grid label{display:grid;gap:6px;font-size:12px;font-weight:700;color:#3f5a76}
+.fleet-form-grid .full{grid-column:1/-1}
+.fleet-form-grid input,.fleet-form-grid select,.fleet-form-grid textarea{font:inherit;width:100%;min-width:0;border:1px solid #cbd9e9;border-radius:9px;padding:10px;color:#193958;background:white}
+.fleet-dialog-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:22px;flex-wrap:wrap}
+.fleet-dialog-actions button{background:#1768f5;color:#fff;border:1px solid #1768f5;border-radius:9px;padding:10px 15px;font:inherit;font-weight:750;cursor:pointer}
+.fleet-dialog-actions .secondary{background:#fff;border-color:#cbd9e9;color:#305276}
+.fleet-dialog-actions button:disabled{opacity:.5;cursor:not-allowed}
+#serviceError,#serviceCompleteError{font-weight:700;color:#ad2d46}
+.service-panel button:focus-visible,.fleet-dialog button:focus-visible,.fleet-dialog input:focus-visible,.fleet-dialog select:focus-visible,.fleet-dialog textarea:focus-visible{outline:3px solid #eebd20;outline-offset:2px}
+@media(max-width:800px){#workcontent .service-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.fleet-form-grid{grid-template-columns:1fr}.fleet-dialog{padding:17px}}
