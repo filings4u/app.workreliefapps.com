@@ -7,3 +7,15 @@
 .load-detail .workflow-ok{background:#e5f5eb;color:#236e41}
 .load-detail .workflow-missing{background:#fff0d8;color:#93601c}
 .load-detail #workflowCheckNote{font-size:12px;margin-top:10px}
+
+/* Driver document review is embedded in Shipment Execution, separate from official POD records. */
+.tms-driver-submission-list{display:grid;gap:11px;margin-top:15px}
+.tms-driver-submission{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap;border:1px solid #e0eaf5;background:#f9fbff;border-radius:11px;padding:15px}
+.tms-driver-submission>div:first-child{display:grid;gap:5px;min-width:220px;flex:1}
+.tms-driver-submission strong{color:#193858;font-size:13px;text-transform:capitalize}
+.tms-driver-submission span{color:#647b97;font-size:12px}
+.tms-driver-submission p{font-size:12px;margin:3px 0}
+.tms-driver-submission-actions{display:flex;gap:7px;flex-wrap:wrap}
+.tms-driver-submission-actions button{background:#1768f5;color:#fff;border:1px solid #1768f5;padding:9px 11px;font:inherit;font-size:12px;font-weight:750;border-radius:9px;cursor:pointer}
+.tms-driver-submission-actions button:first-child{background:#fff;color:#1768f5}
+.tms-driver-submission-actions button:focus-visible{outline:3px solid #f5c329;outline-offset:2px}
