@@ -40,3 +40,28 @@
 #workcontent .qualification-panel td button{white-space:nowrap}
 #workcontent .qualification-panel .service-help{max-width:950px}
 #qualificationError{color:#a92744;font-weight:750}
+
+/* Restricted driver qualification documents and review history */
+#driverDocumentsPanel{margin-top:18px}
+#driverDocumentsPanel[hidden]{display:none!important}
+#driverDocumentsPanel h2{font-size:19px;color:#1c395b;margin:0 0 8px}
+#driverDocumentsPanel h3{font-size:15px;color:#233d5d;margin:0 0 13px}
+#driverDocumentsPanel .qual-doc-grid{display:grid;grid-template-columns:minmax(250px,340px) minmax(0,1fr);gap:22px;margin:21px 0}
+#driverDocumentsPanel .qual-document-form{border:1px solid #deebf7;border-radius:12px;padding:19px;background:#f8fbff;display:grid;align-content:start;gap:13px}
+#driverDocumentsPanel .qual-document-form label{display:grid;gap:6px;color:#3d5774;font-size:12px;font-weight:700}
+#driverDocumentsPanel .qual-document-form input,#driverDocumentsPanel .qual-document-form select,#driverDocumentsPanel .qual-doc-header select{font:inherit;min-width:0;width:100%;padding:10px;border-radius:9px;border:1px solid #cbd9e9;background:#fff}
+#driverDocumentsPanel .qual-document-form button,#driverDocumentsPanel .qualification-doc-actions button{border:0;border-radius:9px;background:#1768f5;color:white;padding:10px 13px;font:inherit;font-weight:750;cursor:pointer}
+#driverDocumentsPanel .qual-document-form button:disabled{opacity:.55;cursor:not-allowed}
+#driverDocumentsPanel .qual-document-register{min-width:0}
+#driverDocumentsPanel .qual-doc-header{display:flex;justify-content:space-between;align-items:center;gap:13px;flex-wrap:wrap}
+#driverDocumentsPanel .qual-doc-header select{max-width:270px}
+#driverDocumentsPanel .qualification-doc-actions{display:flex;gap:6px;flex-wrap:wrap}
+#driverDocumentsPanel .qualification-doc-actions button{font-size:12px;padding:7px 9px;white-space:nowrap}
+#driverDocumentsPanel .qual-doc-note,#driverDocumentsPanel #docRegisterStatus{font-size:12px;color:#6a8098;margin:0}
+#driverDocumentsPanel #docUploadError,#docReviewError{color:#b22a43;font-weight:700}
+#driverDocumentsPanel .qual-audit{border-top:1px solid #e3ebf5;padding-top:18px}
+#driverDocumentsPanel .qualification-audit-event{display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;padding:12px;border-bottom:1px solid #e8edf5;font-size:12px}
+#driverDocumentsPanel .qualification-audit-event strong{color:#1e3c60}
+#driverDocumentsPanel .qualification-audit-event span{color:#70849c}
+#driverDocumentsPanel .qualification-audit-event p{width:100%;margin:0;color:#627b98}
+@media(max-width:1050px){#driverDocumentsPanel .qual-doc-grid{grid-template-columns:1fr}}
