@@ -147,3 +147,18 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 
 /* Freight-specific invoice editor */
 .invoice-freight-panel{margin:20px 0 4px;border:1px solid #dce6f0;background:#f8fafd;border-radius:13px;padding:20px}.invoice-freight-panel h3{font-size:17px;margin:0 0 15px;color:#19314f}.invoice-charge-select{padding:10px;border:1px solid #ccd9e8;border-radius:8px;background:white;color:#1c3451;max-width:215px}.invoice-live .invoice-freight-panel .quote-field-grid{margin-top:0}.invoice-live .invoice-running-total{border-top:1px solid #e0e7ef;margin-top:16px}@media(max-width:680px){.invoice-freight-panel{padding:14px}.invoice-charge-select{max-width:100%}}
+
+/* WorkRelief application branding: align TMS shared shell with app catalog. */
+:root{--wr-tms-accent:#1768f5;--wr-tms-accent-soft:#eaf2ff}
+.sidebar .navitem.current{background:var(--wr-tms-accent-soft);color:var(--wr-tms-accent)}
+.sidebar .navitem:not(.planned):hover{background:#f0f5ff;color:var(--wr-tms-accent)}
+.topright a,.eyebrow,.footerlink{color:var(--wr-tms-accent)}
+.role-links a[aria-current]{background:var(--wr-tms-accent);border-color:var(--wr-tms-accent)}
+.wf-action,.wf-controls button,.wf-form button,.panel button{background:var(--wr-tms-accent)}
+.wf-controls .wf-secondary,.panel .wf-secondary{background:var(--wr-tms-accent-soft);color:var(--wr-tms-accent)}
+.wf-steps .wf-step-active{background:var(--wr-tms-accent-soft);border-color:#a7c8ff;color:var(--wr-tms-accent)}
+.broker-toolbar .wf-action:not(:first-child){color:var(--wr-tms-accent)!important;border-color:#bdd4fa}
+.broker-flow-number,.broker-attention>span{color:var(--wr-tms-accent)}
+.broker-tool:hover,.broker-flow-step:hover{background:var(--wr-tms-accent-soft)}
+/* Accessible unified focus treatment. */
+.sidebar a:focus-visible,.topbar a:focus-visible,.wf-action:focus-visible,.sidebar-toggle:focus-visible{outline:3px solid #f5b800;outline-offset:2px}
