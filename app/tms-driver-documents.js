@@ -14,7 +14,9 @@ function render(){
  const visible=documents.filter(d=>!filter.value||d.driver_id===filter.value);
  for(const doc of visible){
   const row=el('tr');
-  for(const value of [name(doc.driver_id),documentLabels[doc.document_type]||doc.document_type,date(doc.document_expires_on),doc.review_status,date(doc.uploaded_at)])row.append(el('td',value));
+  const today=new Date().toISOString().slice(0,10),soon=new Date(Date.now()+30*86400000).toISOString().slice(0,10);
+  const warning=doc.document_expires_on?(doc.document_expires_on<today?' · Expired':doc.document_expires_on<=soon?' · Expires within 30 days':''):'';
+  for(const value of [name(doc.driver_id),documentLabels[doc.document_type]||doc.document_type,date(doc.document_expires_on)+warning,doc.review_status,date(doc.uploaded_at)])row.append(el('td',value));
   const actions=el('td');actions.className='qualification-doc-actions';
   const view=el('button','View Securely');view.type='button';view.onclick=()=>openDocument(doc);actions.append(view);
   const review=el('button','Review');review.type='button';review.onclick=()=>openReview(doc);actions.append(review);
@@ -43,14 +45,16 @@ async function reload(){
  render();status('Private qualification documents and review history loaded. Displaying up to 1,000 records per category.');
 }
 async function openDocument(doc){
+ const viewer=window.open('about:blank','_blank');
  try{
   status('Preparing private file access…');
   const {data,error}=await sb.storage.from(BUCKET).createSignedUrl(doc.storage_path,60);
   if(error)throw error;
   if(!data?.signedUrl)throw Error('No secure document URL returned');
-  window.open(data.signedUrl,'_blank','noopener,noreferrer');
-  status('Opened a time-limited private document link.');
- }catch(error){status('Unable to open document: '+(error.message||'Access denied'),true)}
+  if(viewer){viewer.opener=null;viewer.location.replace(data.signedUrl);}
+  else throw Error('The browser blocked the secure document window. Allow popups for WorkRelief and try again.');
+  status('Opened a 60-second private document link.');
+ }catch(error){if(viewer)viewer.close();status('Unable to open document: '+(error.message||'Access denied'),true)}
 }
 function openReview(doc){
  activeReview=doc;$('documentReviewForm').reset();$('documentReviewHeading').textContent='Review '+(documentLabels[doc.document_type]||'Qualification Document')+' · '+name(doc.driver_id);
