@@ -1,6 +1,6 @@
 # WorkRelief Enterprise TMS — Build Completion & Test Readiness
 
-Last reviewed: 2026-11-13
+Last reviewed: 2026-11-13 (driver workspace increment)
 Repository: filings4u/app.workreliefapps.com
 Database: existing WorkRelief Supabase project
 
@@ -21,6 +21,10 @@ Do not declare the TMS ready for user acceptance testing merely because pages ex
 - [x] Direct client INSERT/UPDATE/DELETE on load history revoked.
 - [x] Direct dispatch release/completion status updates blocked outside the canonical RPC.
 - [x] Multiple application scripts have passed static JavaScript syntax checks.
+- [x] Initial driver trip workspace built within the existing TMS: admin links a confirmed standalone WorkRelief account, driver views only assigned loads and submits limited manual milestones through authenticated RPCs.
+- [x] Driver access linking does not require ordinary workspace membership; direct driver RPCs return no customer rates, carrier rates, or financial documents.
+- [x] Earlier broad workspace-member driver linking RPC disabled for authenticated callers.
+
 
 ## Build scope that still needs implementation or end-to-end proof
 
@@ -35,7 +39,7 @@ Do not declare the TMS ready for user acceptance testing merely because pages ex
 
 ### Required enterprise capabilities from the original TMS scope
 - [ ] Confirm and finish customer/shipper and carrier self-service experiences, including controlled invitations and permissions.
-- [ ] Confirm and finish driver-facing task and document workflow, not only administrative driver records.
+- [ ] Complete driver-facing document receipt/upload, account invitations and permission testing. Assigned-trip viewing and manual milestone reporting have an initial connected implementation.
 - [ ] ELD/HOS integration or documented manual workflow with explicit verified-vs-unverified operational controls.
 - [ ] Actual transportation tracking integration (GPS/telematics), beyond manually recorded events, if part of the release scope.
 - [ ] Fleet inspection/DVIR and preventive maintenance workflows fully verified (not only service scheduling).
