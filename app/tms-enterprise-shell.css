@@ -214,3 +214,18 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 .tms-alert-row:focus-visible,.tms-alert-refresh:focus-visible,.tms-alert-tools select:focus-visible{outline:3px solid #f0bc29;outline-offset:3px}
 @media(max-width:1200px){.tms-alerts-stats{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:650px){.tms-alerts-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.tms-alert-row{grid-template-columns:1fr;gap:8px}.tms-alert-date{text-align:left}.tms-alerts-list{max-height:none}}
+
+/* WorkRelief TMS: verified external customer payment recording inside existing invoice workflow. */
+.tms-customer-payment-dialog{width:min(540px,96vw);border:0;border-radius:16px;padding:26px;background:#fff;color:#183655;font:14px/1.5 Inter,system-ui,sans-serif;box-shadow:0 24px 76px #0c24494d}
+.tms-customer-payment-dialog::backdrop{background:#0a23469e}
+.tms-customer-payment-dialog h2{font-size:21px;margin:0 0 10px}
+.tms-customer-payment-dialog p{font-size:12px;color:#627b98}
+.tms-customer-payment-dialog label{display:grid;gap:6px;margin:13px 0;color:#345374;font-size:12px;font-weight:750}
+.tms-customer-payment-dialog input,.tms-customer-payment-dialog select,.tms-customer-payment-dialog textarea{width:100%;min-width:0;border:1px solid #cbd9ed;border-radius:9px;padding:10px 12px;font:inherit;color:#1a3658;background:#fff}
+.tms-customer-payment-actions{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;margin-top:20px}
+.tms-customer-payment-actions button{font:inherit;font-weight:750;border:1px solid #1768f5;border-radius:9px;background:#1768f5;color:white;padding:10px 13px;cursor:pointer}
+.tms-customer-payment-actions button:first-child{background:#fff;border-color:#cbd9ed;color:#345374}
+.tms-customer-payment-actions button:disabled{opacity:.55;cursor:not-allowed}
+#tmsCustomerPaymentError{color:#ad2943;font-weight:700}
+.tms-customer-payment-dialog :is(button,input,select,textarea):focus-visible{outline:3px solid #edbd27;outline-offset:2px}
+@media(max-width:580px){.tms-customer-payment-dialog{padding:18px}}
