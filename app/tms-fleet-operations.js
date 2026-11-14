@@ -38,6 +38,22 @@ submit('fuelForm','tms_record_fuel_entry',v=>({p_workspace:ws,p_equipment:v.equi
 submit('mileageForm','tms_record_jurisdiction_mileage',v=>({p_workspace:ws,p_equipment:v.equipment,p_day:v.date,p_jurisdiction:v.jurisdiction.toUpperCase(),p_miles:Number(v.miles),p_load:null,p_notes:v.notes||''}));
 submit('hosForm','tms_record_hos_attestation',v=>({p_workspace:ws,p_driver:v.driver,p_day:v.date,p_duty:v.status,p_notes:v.notes||''}));
 submit('integrationForm','tms_request_integration',v=>({p_workspace:ws,p_provider:v.provider,p_kind:v.kind,p_scope:v.scope}));
+let iftaRows=[];
+$('iftaRun').onclick=async()=>{
+ const from=$('iftaFrom').value,to=$('iftaThrough').value;
+ if(!from||!to||from>to){$('iftaState').textContent='Choose a valid period';return}
+ const result=await sb.rpc('tms_ifta_source_summary',{p_workspace:ws,p_start:from,p_end:to});
+ if(result.error){$('iftaState').textContent=result.error.message;return}
+ iftaRows=Array.isArray(result.data?.jurisdictions)?result.data.jurisdictions:[];
+ const host=$('iftaSummary');host.replaceChildren();
+ for(const j of iftaRows){
+  const row=E('article');row.className='ops-item';
+  row.append(E('strong',j.jurisdiction),E('span',String(j.miles)+' manual miles'),E('span',String(j.purchased_gallons)+' fuel gallons'));
+  host.append(row);
+ }
+ $('iftaState').textContent=result.data?.notice||'Unverified source summary only';
+ $('iftaExport').disabled=iftaRows.length===0;
+};
 async function resolve(item){if(!canAdmin)return;const notes=window.prompt('Describe repairs and checks performed before resolving this safety-critical defect:');if(notes===null)return;if(notes.trim().length<8){message('Enter at least eight characters describing the repair and review.',true);return}
  try{const {error}=await sb.rpc('tms_resolve_vehicle_inspection',{p_workspace:ws,p_inspection:item.id,p_notes:notes.trim()});if(error)throw error;await reload();message('Inspection resolution recorded and dispatch hold updated.')}catch(error){message('Unable to resolve inspection: '+(error.message||'Unknown error'),true)}
 }
