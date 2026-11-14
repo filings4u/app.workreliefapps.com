@@ -1,6 +1,6 @@
 # WorkRelief Enterprise TMS — Build Completion & Test Readiness
 
-Last reviewed: 2026-11-13 (extended enterprise operations and document handoff increment)
+Last reviewed: 2026-11-13 (enterprise invitations, notifications and account security increment)
 Repository: filings4u/app.workreliefapps.com
 Database: existing WorkRelief Supabase project
 
@@ -36,6 +36,10 @@ Do not declare the TMS ready for user acceptance testing merely because pages ex
 - [x] Fleet operations: recorded vehicle inspections and critical-defect dispatch holds, purchased fuel, jurisdiction mileage, manual HOS status attestations, and IFTA source summaries.
 - [x] Integration requests and owner/admin request approval are implemented; provider credentials and live connections are not configured.
 - [x] Driver pay settlements: completed dispatch pay statement preparation, approval, partial external payment reconciliation, and driver read-only statements.
+- [x] Restricted external driver and partner invitations: seven-day one-time tokens stored as SHA256 digests, Supabase Auth activation link, Resend delivery function, recipient acceptance, owner/admin revocation, and account isolation triggers. Invitation delivery and browser acceptance remain untested with real recipients.
+- [x] Role-scoped in-app notification inbox for staff, drivers and partners, with signed-in read receipts and database-generated shipment/submission notifications. No email or SMS notification transport is implied.
+- [x] Driver account administrators can revoke a linked driver's trip access independently of invitations.
+
 
 
 
@@ -51,8 +55,8 @@ Do not declare the TMS ready for user acceptance testing merely because pages ex
 - [ ] Role matrix testing for owner/admin/member/read-only roles and cross-tenant denial.
 
 ### Required enterprise capabilities from the original TMS scope
-- [ ] Customer/shipper and carrier shipment access, administrator links, private document exchange and staff replies are implemented. Still required: account invitation onboarding, authenticated role-isolation browser testing, and external partner acceptance.
-- [ ] Driver trip documents and explicit staff-approved official POD publication are implemented. Still required: account invitation UX, regulatory review, and authenticated browser permission testing.
+- [ ] Customer/shipper and carrier shipment access, admin linking/revocation, private document exchange and secure email invitations are implemented. Still required: end-to-end invitation delivery and acceptance with real accounts, authenticated role-isolation tests, and external partner UAT.
+- [ ] Driver trip documents, staff-approved official POD publication, invitation onboarding and account revocation are implemented. Still required: authenticated invitation and browser permission tests, regulatory review, and driver UAT.
 - [ ] ELD/HOS integration or documented manual workflow with explicit verified-vs-unverified operational controls.
 - [ ] Actual transportation tracking integration (GPS/telematics), beyond manually recorded events, if part of the release scope.
 - [ ] Equipment inspection/DVIR-style reporting, safety-critical dispatch holds and maintenance service scheduling are implemented. Still required: regulatory DVIR review, equipment return-to-service tests, and signed-in functional validation.
@@ -60,7 +64,7 @@ Do not declare the TMS ready for user acceptance testing merely because pages ex
 - [ ] Driver settlements and pay statements are separate from carrier bills, with approval and external payment ledger. Remaining: payroll/tax/legal classification review and browser acceptance.
 - [ ] Customer receivables, carrier payables, aging, adjustments, and accounting exports fully reconciled.
 - [ ] Integration request and approval workflow implemented. Remaining: provider onboarding, secure encrypted credentials, verified sync/webhook integrations and failure monitoring.
-- [ ] Automated notifications (if required), role-aware in-app alerts, and delivery traceability.
+- [ ] Role-aware in-app notifications are implemented with read state, recipient isolation and trigger-based event generation. Still required: functional delivery traceability tests and optional scheduled email/SMS channels if required by release scope.
 - [ ] Reporting exports, historical audit fidelity, and performance under realistic tenant volume.
 
 ### Release gates
