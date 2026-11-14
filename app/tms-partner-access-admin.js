@@ -1,10 +1,10 @@
 import{createClient}from'https://esm.sh/@supabase/supabase-js@2';
 const sb=createClient('https://cqzwoskpgefacghdnuyz.supabase.co','sb_publishable_CoIoX7Pinqd2o4kJwqCTqA_RKmePPZt');
 const $=id=>document.getElementById(id),E=(tag,v)=>{const node=document.createElement(tag);if(v!==undefined)node.textContent=String(v);return node};
-let ws='',partners=[],links=[],busy=false;
+let ws='',partners=[],links=[],invitations=[],busy=false;
 const status=(value,error=false)=>{const n=$('partnerAccessState');n.textContent=value;n.style.color=error?'#ae2947':'#607b98'};
 async function refresh(){
- const {data,error}=await sb.rpc('tms_partner_access_admin',{p_workspace:ws});if(error)throw error;
+ const [result,pending]=await Promise.all([sb.rpc('tms_partner_access_admin',{p_workspace:ws}),sb.from('tms_external_invitations').select('id,target_id,invite_email,status,expires_at,created_at').eq('workspace_id',ws).eq('invite_kind','partner').order('created_at',{ascending:false}).limit(100)]);if(result.error)throw result.error;if(pending.error)throw pending.error;const data=result.data;invitations=pending.data||[];
  partners=Array.isArray(data?.partners)?data.partners:[];links=Array.isArray(data?.links)?data.links:[];
  const select=$('partnerAccessPartner'),chosen=select.value;select.replaceChildren();const placeholder=E('option','Select Active Partner');placeholder.value='';select.append(placeholder);
  for(const partner of partners.filter(p=>p.status==='active')){const opt=E('option',partner.name+' · '+partner.type);opt.value=partner.id;select.append(opt)}
@@ -16,6 +16,13 @@ async function refresh(){
  const actions=E('td'),remove=E('button','Revoke Access');remove.type='button';remove.disabled=busy;remove.onclick=()=>revoke(link);actions.append(remove);row.append(actions);host.append(row)
  }
  if(!links.length){const row=E('tr'),empty=E('td','No customer or carrier user accounts are linked.');empty.colSpan=4;row.append(empty);host.append(row)}
+ const list=$('partnerInviteRows');list.replaceChildren();
+ for(const inv of invitations){
+ const partner=partners.find(p=>p.id===inv.target_id),row=E('tr'),expired=new Date(inv.expires_at)<new Date()&&['pending','sent'].includes(inv.status);
+ for(const label of [partner?.name||'Partner record',inv.invite_email,expired?'Expired':inv.status,new Date(inv.expires_at).toLocaleString()])row.append(E('td',label));
+ const action=E('td');if(['pending','sent'].includes(inv.status)&&!expired){const btn=E('button','Revoke');btn.type='button';btn.onclick=()=>revokeInvite(inv);action.append(btn)}row.append(action);list.append(row);
+ }
+ if(!invitations.length){const row=E('tr'),empty=E('td','No partner invitations sent.');empty.colSpan=5;row.append(empty);list.append(row)}
  status('Showing '+links.length+' authorized partner account link'+(links.length===1?'':'s')+'.');
 }
 async function revoke(link){
@@ -25,6 +32,23 @@ async function revoke(link){
  catch(error){status('Unable to revoke access: '+(error.message||'Unknown error'),true)}
  finally{busy=false}
 }
+async function revokeInvite(inv){
+ if(busy||!window.confirm('Revoke this partner invitation?'))return;
+ busy=true;try{const{error}=await sb.rpc('tms_revoke_external_invite',{p_workspace:ws,p_invitation:inv.id});if(error)throw error;await refresh();status('Partner invitation revoked.')}
+ catch(error){status('Unable to revoke invitation: '+error.message,true)}finally{busy=false}
+}
+$('partnerInviteSend').onclick=async()=>{
+ if(busy||!ws)return;
+ const partner=$('partnerAccessPartner').value,email=$('partnerAccessEmail').value.trim();
+ if(!partners.some(p=>p.id===partner&&p.status==='active')||!email){status('Select an active partner and enter an email.',true);return}
+ if(!window.confirm('Send a restricted WorkRelief TMS shipment invitation to '+email+'?'))return;
+ busy=true;$('partnerInviteSend').disabled=true;status('Sending partner invitation…');
+ try{const {data,error}=await sb.functions.invoke('workrelief-tms-external-invite',{body:{workspace_id:ws,target_id:partner,kind:'partner',email}});
+ if(error)throw error;if(data?.status!=='sent')throw Error(data?.error||'Email delivery not confirmed');
+ await refresh();status('Partner invitation emailed. Access activates after confirmed account acceptance.')}
+ catch(error){status('Unable to send partner invitation: '+(error.message||'Unknown error'),true)}
+ finally{busy=false;$('partnerInviteSend').disabled=false}
+};
 $('partnerAccessForm').onsubmit=async e=>{
  e.preventDefault();if(busy)return;
  const fields=Object.fromEntries(new FormData(e.currentTarget));
