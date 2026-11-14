@@ -1,7 +1,7 @@
 import{createClient}from'https://esm.sh/@supabase/supabase-js@2';
 const sb=createClient('https://cqzwoskpgefacghdnuyz.supabase.co','sb_publishable_CoIoX7Pinqd2o4kJwqCTqA_RKmePPZt');
 const $=id=>document.getElementById(id),E=(tag,value)=>{const node=document.createElement(tag);if(value!==undefined)node.textContent=String(value);return node};
-let ws='',canWrite=false,canAdmin=false,equipment=[],drivers=[],inspections=[],fuel=[],hos=[],requests=[];
+let ws='',canWrite=false,canAdmin=false,equipment=[],drivers=[],inspections=[],fuel=[],hos=[],requests=[],mileage=[];
 const message=(value,error=false)=>{const n=$('fleetOpsState');n.textContent=value;n.style.color=error?'#b52d49':'#657d97'};
 const fmt=value=>value?new Date(value).toLocaleString():'—';
 const unit=id=>equipment.find(e=>e.id===id)?.unit_number||'Unit';
@@ -13,16 +13,17 @@ function show(){
  renderList('inspectionRows',inspections,(item,r)=>{item.append(E('strong',unit(r.equipment_id)+' · '+r.inspection_kind.replaceAll('_',' ')),E('span',fmt(r.inspected_at)+' · '+(r.safety_critical?'SAFETY-CRITICAL DEFECT':r.defect_found?'Defect recorded':'No defect')+' · '+r.status));if(r.defect_description)item.append(E('span',r.defect_description));if(r.resolution_notes)item.append(E('span','Resolution: '+r.resolution_notes));if(r.safety_critical&&r.status!=='resolved'&&canAdmin){const b=E('button','Record Repair & Resolve');b.type='button';b.onclick=()=>resolve(r);item.append(b)}});
  renderList('fuelRows',fuel,(item,r)=>item.append(E('strong',unit(r.equipment_id)+' · '+r.jurisdiction+' · '+r.purchased_on),E('span',Number(r.gallons).toFixed(3)+' gallons · $'+Number(r.total_cost).toFixed(2)),E('span',r.vendor||r.receipt_reference||'No receipt reference')));
  const gallons=fuel.reduce((a,r)=>a+Number(r.gallons||0),0),cost=fuel.reduce((a,r)=>a+Number(r.total_cost||0),0);$('fuelSummary').textContent=fuel.length+' purchases · '+gallons.toFixed(3)+' gallons · $'+cost.toFixed(2)+' in displayed entries (up to 1000)';
+ renderList('mileageRows',mileage,(item,r)=>item.append(E('strong',unit(r.equipment_id)+' · '+r.jurisdiction+' · '+r.trip_date),E('span',Number(r.miles).toFixed(2)+' manual miles'),E('span',r.notes||'No source notes')));
  renderList('hosRows',hos,(item,r)=>item.append(E('strong',driver(r.driver_id)+' · '+r.attested_on),E('span',r.duty_status.replaceAll('_',' ')+' · MANUAL, NOT ELD VERIFIED'),E('span',r.notes||'No notes')));
  renderList('integrationRows',requests,(item,r)=>item.append(E('strong',r.provider_name+' · '+r.integration_kind.toUpperCase()),E('span','Status: '+r.approval_status+' · '+fmt(r.created_at)),E('span',r.requested_scope)));
  document.querySelectorAll('.ops-form button').forEach(b=>b.disabled=!canWrite||((b.closest('form')?.id==='integrationForm')&&!canAdmin));
  $('exportFuel').disabled=!fuel.length;
 }
 async function reload(){
- const tables=['tms_equipment','tms_drivers','tms_vehicle_inspections','tms_fuel_entries','tms_driver_hos_attestations','tms_integration_requests'];
+ const tables=['tms_equipment','tms_drivers','tms_vehicle_inspections','tms_fuel_entries','tms_driver_hos_attestations','tms_integration_requests','tms_jurisdiction_mileage'];
  const values=await Promise.all(tables.map(t=>sb.from(t).select('*').eq('workspace_id',ws).order('created_at',{ascending:false}).limit(1000)));
  for(const result of values)if(result.error)throw result.error;
- [equipment,drivers,inspections,fuel,hos,requests]=values.map(r=>r.data||[]);
+ [equipment,drivers,inspections,fuel,hos,requests,mileage]=values.map(r=>r.data||[]);
  show();message('Live WorkRelief fleet operations records loaded. Up to 1,000 rows per list.');
 }
 function submit(formId,rpc,build){$(formId).onsubmit=async ev=>{
@@ -34,6 +35,7 @@ function submit(formId,rpc,build){$(formId).onsubmit=async ev=>{
 }}
 submit('inspectionForm','tms_record_vehicle_inspection',v=>({p_workspace:ws,p_equipment:v.equipment,p_kind:v.kind,p_time:new Date(v.time).toISOString(),p_odometer:v.odometer===''?null:Number(v.odometer),p_defect:v.defect==='on',p_critical:v.critical==='on',p_description:v.description||'',p_driver:null}));
 submit('fuelForm','tms_record_fuel_entry',v=>({p_workspace:ws,p_equipment:v.equipment,p_driver:null,p_date:v.date,p_jurisdiction:v.jurisdiction.toUpperCase(),p_vendor:v.vendor||'',p_gallons:Number(v.gallons),p_total:Number(v.cost),p_odometer:v.odometer===''?null:Number(v.odometer),p_receipt:v.receipt||''}));
+submit('mileageForm','tms_record_jurisdiction_mileage',v=>({p_workspace:ws,p_equipment:v.equipment,p_day:v.date,p_jurisdiction:v.jurisdiction.toUpperCase(),p_miles:Number(v.miles),p_load:null,p_notes:v.notes||''}));
 submit('hosForm','tms_record_hos_attestation',v=>({p_workspace:ws,p_driver:v.driver,p_day:v.date,p_duty:v.status,p_notes:v.notes||''}));
 submit('integrationForm','tms_request_integration',v=>({p_workspace:ws,p_provider:v.provider,p_kind:v.kind,p_scope:v.scope}));
 async function resolve(item){if(!canAdmin)return;const notes=window.prompt('Describe repairs and checks performed before resolving this safety-critical defect:');if(notes===null)return;if(notes.trim().length<8){message('Enter at least eight characters describing the repair and review.',true);return}
@@ -53,6 +55,6 @@ $('exportFuel').onclick=()=>{
  if(requested&&!allowed.includes(requested))throw Error('Access denied to this workspace');
  ws=requested||(allowed.length===1?allowed[0]:'');if(!ws)throw Error('Choose your authorized WorkRelief workspace');
  const role=(m.data||[]).find(x=>x.workspace_id===ws)?.role,owner=(w.data||[]).some(x=>x.id===ws);canWrite=owner||['owner','admin','member'].includes(role);canAdmin=owner||['owner','admin'].includes(role);
- $('fleetOpsContent').hidden=false;const today=new Date().toISOString().slice(0,10);document.querySelector('#fuelForm [name=date]').value=today;document.querySelector('#hosForm [name=date]').value=today;const n=new Date(),local=new Date(n.getTime()-n.getTimezoneOffset()*60000).toISOString().slice(0,16);document.querySelector('#inspectionForm [name=time]').value=local;
+ $('fleetOpsContent').hidden=false;const today=new Date().toISOString().slice(0,10);document.querySelector('#fuelForm [name=date]').value=today;document.querySelector('#hosForm [name=date]').value=today;document.querySelector('#mileageForm [name=date]').value=today;const year=new Date().getFullYear(),quarterStart=Math.floor(new Date().getMonth()/3)*3;$('iftaFrom').value=new Date(Date.UTC(year,quarterStart,1)).toISOString().slice(0,10);$('iftaThrough').value=today;const n=new Date(),local=new Date(n.getTime()-n.getTimezoneOffset()*60000).toISOString().slice(0,16);document.querySelector('#inspectionForm [name=time]').value=local;
  await reload();
  }catch(error){message('Fleet operations unavailable: '+(error.message||'Unknown error'),true)}})();
