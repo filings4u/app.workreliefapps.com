@@ -135,7 +135,7 @@ const email=document.getElementById('auth-email'),password=document.getElementBy
 const say=(message)=>{status.textContent=message};
 const next=new URLSearchParams(location.search).get('next');
 const inviteTicket=new URLSearchParams(location.search).get('invite');
-const safeNext=(value)=>{if(!value)return null;const path=value.split('?')[0];const allowed=['app/crm.html','app/crm-team.html','app/purchase-apps.html','app/crm-branding.html','app/checkout-apps.html','app/crm-team-workspace.html','app/crm-team-seats.html'];if(!allowed.includes(path))return null;const query=value.slice(path.length);if(query&&!/^\?[A-Za-z0-9_=&%.,-]{0,400}$/.test(query))return null;return new URL(path.replace(/^app\//,'')+query,location.href).href};
+const safeNext=(value)=>{if(!value)return null;const path=value.split('?')[0];const allowed=['app/crm.html','app/crm-team.html','app/purchase-apps.html','app/crm-branding.html','app/checkout-apps.html','app/crm-team-workspace.html','app/crm-team-seats.html','app/tms-accept-invitation.html'];if(!allowed.includes(path))return null;const query=value.slice(path.length);if(query&&!/^\?[A-Za-z0-9_=&%.,-]{0,400}$/.test(query))return null;return new URL(path.replace(/^app\//,'')+query,location.href).href};
 const destination=inviteTicket&&/^[a-f0-9]{64}$/i.test(inviteTicket)?new URL('crm-team.html?invite='+encodeURIComponent(inviteTicket),location.href).href:safeNext(next)||new URL('crm.html',location.href).href;
 const form=document.getElementById('auth-form');
 function busy(value){submit.disabled=value;document.getElementById('auth-reset').disabled=value}
