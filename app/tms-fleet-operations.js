@@ -54,6 +54,20 @@ $('iftaRun').onclick=async()=>{
  $('iftaState').textContent=result.data?.notice||'Unverified source summary only';
  $('iftaExport').disabled=iftaRows.length===0;
 };
+$('iftaExport').onclick=()=>{
+ if(!iftaRows.length)return;
+ const quote=v=>{
+  const raw=String(v??'');
+  const safe=/^[=+@-]/.test(raw)?String.fromCharCode(39)+raw:raw;
+  const q=String.fromCharCode(34);
+  return q+safe.replaceAll(q,q+q)+q;
+ };
+ const lines=[['Jurisdiction','Manual Miles','Purchased Gallons','Fuel Cost USD','Mileage Records','Purchase Records'].map(quote).join(',')];
+ for(const r of iftaRows)lines.push([r.jurisdiction,r.miles,r.purchased_gallons,r.purchase_cost,r.mileage_records,r.purchase_records].map(quote).join(','));
+ const blob=new Blob([String.fromCharCode(65279)+lines.join(String.fromCharCode(13,10))],{type:'text/csv;charset=utf-8'});
+ const url=URL.createObjectURL(blob);
+ const link=document.createElement('a');link.href=url;link.download='workrelief-ifta-source-'+$('iftaFrom').value+'-'+$('iftaThrough').value+'.csv';link.click();URL.revokeObjectURL(url);
+};
 async function resolve(item){if(!canAdmin)return;const notes=window.prompt('Describe repairs and checks performed before resolving this safety-critical defect:');if(notes===null)return;if(notes.trim().length<8){message('Enter at least eight characters describing the repair and review.',true);return}
  try{const {error}=await sb.rpc('tms_resolve_vehicle_inspection',{p_workspace:ws,p_inspection:item.id,p_notes:notes.trim()});if(error)throw error;await reload();message('Inspection resolution recorded and dispatch hold updated.')}catch(error){message('Unable to resolve inspection: '+(error.message||'Unknown error'),true)}
 }
