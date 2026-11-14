@@ -1,6 +1,6 @@
 # WorkRelief Enterprise TMS — Build Completion & Test Readiness
 
-Last reviewed: 2026-11-13 (partner shipment self-service increment)
+Last reviewed: 2026-11-13 (extended enterprise operations and document handoff increment)
 Repository: filings4u/app.workreliefapps.com
 Database: existing WorkRelief Supabase project
 
@@ -30,6 +30,14 @@ Do not declare the TMS ready for user acceptance testing merely because pages ex
 - [x] Initial customer/shipper/carrier read-only self-service: isolated confirmed partner accounts see only loads linked by partner ID, without pricing or internal dispatch details.
 - [x] TMS owner/admin partner-access page grants and revokes partner shipment access without adding partner users to general workspace membership.
 
+- [x] Partner shipment message and private-document submissions now connect to Shipment Execution; staff can respond, accept or reject without automatically creating an official POD.
+- [x] Accepted driver or partner POD submissions can be explicitly published as official PODs by a workspace owner/admin using a database-authorized function with source provenance and duplicate protection.
+- [x] Official document records now identify their backing private storage bucket; the Document Center and Shipment Execution use the correct bucket for signed viewing.
+- [x] Fleet operations: recorded vehicle inspections and critical-defect dispatch holds, purchased fuel, jurisdiction mileage, manual HOS status attestations, and IFTA source summaries.
+- [x] Integration requests and owner/admin request approval are implemented; provider credentials and live connections are not configured.
+- [x] Driver pay settlements: completed dispatch pay statement preparation, approval, partial external payment reconciliation, and driver read-only statements.
+
+
 
 ## Build scope that still needs implementation or end-to-end proof
 
@@ -43,15 +51,15 @@ Do not declare the TMS ready for user acceptance testing merely because pages ex
 - [ ] Role matrix testing for owner/admin/member/read-only roles and cross-tenant denial.
 
 ### Required enterprise capabilities from the original TMS scope
-- [ ] Customer/shipper and carrier read-only shipment access and administrator links are implemented. Still required: account invitation onboarding, status updates or document exchange where applicable, role-isolation browser tests, and external partner acceptance.
-- [ ] Driver document receipt/upload is implemented with staff review; remaining: account invitation UX, authenticated browser permission testing, and a controlled manual process for publishing an accepted driver POD into official load documents.
+- [ ] Customer/shipper and carrier shipment access, administrator links, private document exchange and staff replies are implemented. Still required: account invitation onboarding, authenticated role-isolation browser testing, and external partner acceptance.
+- [ ] Driver trip documents and explicit staff-approved official POD publication are implemented. Still required: account invitation UX, regulatory review, and authenticated browser permission testing.
 - [ ] ELD/HOS integration or documented manual workflow with explicit verified-vs-unverified operational controls.
 - [ ] Actual transportation tracking integration (GPS/telematics), beyond manually recorded events, if part of the release scope.
-- [ ] Fleet inspection/DVIR and preventive maintenance workflows fully verified (not only service scheduling).
-- [ ] Fuel/IFTA reporting, routing, and operational cost integrations where required by the enterprise brief.
-- [ ] Driver settlements and pay statements distinct from carrier bills.
+- [ ] Equipment inspection/DVIR-style reporting, safety-critical dispatch holds and maintenance service scheduling are implemented. Still required: regulatory DVIR review, equipment return-to-service tests, and signed-in functional validation.
+- [ ] Fuel and jurisdiction mileage source registers and IFTA CSV source reporting implemented. Remaining: verified tax calculations, audited mileage, state-specific IFTA rules, routing provider integration and compliance acceptance.
+- [ ] Driver settlements and pay statements are separate from carrier bills, with approval and external payment ledger. Remaining: payroll/tax/legal classification review and browser acceptance.
 - [ ] Customer receivables, carrier payables, aging, adjustments, and accounting exports fully reconciled.
-- [ ] Integration approval, configuration, provider credentials handling, and observable sync failures.
+- [ ] Integration request and approval workflow implemented. Remaining: provider onboarding, secure encrypted credentials, verified sync/webhook integrations and failure monitoring.
 - [ ] Automated notifications (if required), role-aware in-app alerts, and delivery traceability.
 - [ ] Reporting exports, historical audit fidelity, and performance under realistic tenant volume.
 
