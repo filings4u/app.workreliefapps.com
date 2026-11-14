@@ -9,8 +9,8 @@ function render(){
  select.replaceChildren();option(select,'','Select Driver');for(const d of drivers)option(select,d.id,d.full_name);if(drivers.some(d=>d.id===chosen))select.value=chosen;
  const body=$('driverLinkedRows');body.replaceChildren();
  for(const link of links){const row=el('tr');const driver=drivers.find(d=>d.id===link.driver_id);
- row.append(el('td',driver?.full_name||'Driver record'),el('td','Confirmed WorkRelief account'),el('td',new Date(link.linked_at).toLocaleString()));body.append(row)}
- if(!links.length){const row=el('tr'),cell=el('td','No driver accounts are linked in this workspace.');cell.colSpan=3;row.append(cell);body.append(row)}
+ row.append(el('td',driver?.full_name||'Driver record'),el('td','Confirmed WorkRelief account'),el('td',new Date(link.linked_at).toLocaleString()));const actions=el('td'),revoke=el('button','Revoke Access');revoke.type='button';revoke.onclick=()=>revokeDriver(link);actions.append(revoke);row.append(actions);body.append(row)}
+ if(!links.length){const row=el('tr'),cell=el('td','No driver accounts are linked in this workspace.');cell.colSpan=4;row.append(cell);body.append(row)}
  const queue=$('driverInviteRows');queue.replaceChildren();
  for(const invite of invitations){
  const row=el('tr'),driver=drivers.find(d=>d.id===invite.target_id);
@@ -29,6 +29,7 @@ async function reload(){const [d,l,i]=await Promise.all([
  sb.from('tms_external_invitations').select('id,target_id,invite_email,status,expires_at,created_at').eq('workspace_id',ws).eq('invite_kind','driver').order('created_at',{ascending:false}).limit(100)
 ]);for(const item of [d,l,i])if(item.error)throw item.error;
  drivers=d.data||[];links=l.data||[];invitations=i.data||[];render();report('Current driver account links loaded. Only confirmed WorkRelief accounts can be linked.')}
+async function revokeDriver(link){if(busy||!window.confirm('Revoke this driver’s access to their assigned WorkRelief trips?'))return;busy=true;try{const{error}=await sb.rpc('tms_unlink_driver_user',{p_workspace:ws,p_driver:link.driver_id});if(error)throw error;await reload();report('Driver account access revoked.')}catch(error){report('Unable to revoke driver account: '+(error.message||'Unknown error'),true)}finally{busy=false}}
 async function revokeInvite(inv){
  if(busy||!window.confirm('Revoke this driver invitation?'))return;
  busy=true;try{const {error}=await sb.rpc('tms_revoke_external_invite',{p_workspace:ws,p_invitation:inv.id});if(error)throw error;await reload();report('Driver invitation revoked.')}
