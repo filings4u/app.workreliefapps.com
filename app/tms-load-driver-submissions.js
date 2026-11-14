@@ -1,7 +1,7 @@
 import{createClient}from'https://esm.sh/@supabase/supabase-js@2';
 const sb=createClient('https://cqzwoskpgefacghdnuyz.supabase.co','sb_publishable_CoIoX7Pinqd2o4kJwqCTqA_RKmePPZt');
 const $=id=>document.getElementById(id),E=(tag,t)=>{const n=document.createElement(tag);if(t!==undefined)n.textContent=String(t);return n};
-const bucket='tms-driver-trip-submissions',loadId=new URLSearchParams(location.search).get('id');let ws='',canReview=false,items=[],busy=false;
+const bucket='tms-driver-trip-submissions',loadId=new URLSearchParams(location.search).get('id');let ws='',canReview=false,canPublish=false,items=[],busy=false,published=new Set();
 function report(t,error=false){const n=$('driverSubmissionState');n.textContent=t;n.style.color=error?'#b22a45':'#647c95'}
 async function preview(item){const tab=window.open('about:blank','_blank');try{
 const{data,error}=await sb.storage.from(bucket).createSignedUrl(item.storage_path,60);if(error)throw error;if(!data?.signedUrl)throw Error('Private document access unavailable');if(!tab)throw Error('Allow document popups for WorkRelief');tab.opener=null;tab.location.replace(data.signedUrl)
@@ -19,11 +19,29 @@ for(const item of items){const row=E('div');row.className='tms-driver-submission
 const info=E('div');info.append(E('strong',(item.document_type||'document').replaceAll('_',' ')),E('span',(item.filename||'File')+' · '+new Date(item.created_at).toLocaleString()),E('span','Review: '+item.review_status));
 if(item.note)info.append(E('p',item.note));if(item.review_note)info.append(E('p','Staff review: '+item.review_note));row.append(info);
 const actions=E('div');actions.className='tms-driver-submission-actions';const view=E('button','View Private File');view.type='button';view.onclick=()=>preview(item);actions.append(view);
-if(canReview&&item.review_status==='pending'){for(const [label,status] of [['Accept Submission','accepted'],['Reject','rejected']]){const b=E('button',label);b.type='button';b.onclick=()=>review(item,status);actions.append(b)}}
+if(canPublish&&item.review_status==='accepted'&&item.document_type==='pod_submission'&&!published.has('driver:'+item.id)){const b=E('button','Publish Official POD');b.type='button';b.onclick=()=>publishPOD(item,'driver');actions.append(b)}if(canReview&&item.review_status==='pending'){for(const [label,status] of [['Accept Submission','accepted'],['Reject','rejected']]){const b=E('button',label);b.type='button';b.onclick=()=>review(item,status);actions.append(b)}}
 row.append(actions);host.append(row)}
 if(!items.length)host.append(E('p','No driver trip documents submitted for this load.'))}
 async function load(){const{data,error}=await sb.from('tms_driver_trip_documents').select('id,document_type,storage_path,filename,note,review_note,review_status,created_at').eq('workspace_id',ws).eq('load_id',loadId).order('created_at',{ascending:false}).limit(150);
-if(error)throw error;items=data||[];render();report('Reviewing '+items.length+' driver submissions. Official POD documents must be handled through Transportation Documents.')}
+if(error)throw error;items=data||[];await loadPublished();render();report('Reviewing '+items.length+' driver submissions. Official POD documents must be handled through Transportation Documents.')}
+async function loadPublished(){
+ const {data,error}=await sb.from('tms_documents').select('source_submission_kind,source_submission_id').eq('workspace_id',ws).eq('load_id',loadId).not('source_submission_id','is',null).limit(150);
+ if(error)throw error;
+ published=new Set((data||[]).map(d=>d.source_submission_kind+':'+d.source_submission_id));
+}
+async function publishPOD(item,source){
+ if(!canPublish||busy)return;
+ if(!window.confirm('Publish this accepted '+source+' submission as an official verified Proof of Delivery? The file will be used for load invoicing prerequisites.'))return;
+ busy=true;
+ try{
+ const {error}=await sb.rpc('tms_publish_accepted_pod',{p_workspace:ws,p_submission:item.id,p_source:source});
+ if(error)throw error;
+ await load();await loadPartnerExchange();
+ window.dispatchEvent(new CustomEvent('tms-document-published'));
+ $('partnerExchangeStaffState').textContent='Official POD published. The load document register and invoice checklist are now eligible for refresh.';
+ }catch(error){$('partnerExchangeStaffState').textContent='Official POD could not be published: '+(error.message||'Unknown error')}
+ finally{busy=false}
+}
 async function loadPartnerExchange(){
  const status=$('partnerExchangeStaffState'),host=$('partnerExchangeStaffRows');host.replaceChildren();
  const{data,error}=await sb.from('tms_partner_submissions').select('id,partner_id,submission_kind,document_type,storage_path,filename,message,review_status,reviewer_note,created_at').eq('workspace_id',ws).eq('load_id',loadId).order('created_at',{ascending:false}).limit(150);
@@ -34,7 +52,7 @@ async function loadPartnerExchange(){
  if(entry.filename)copy.append(E('span',entry.filename));if(entry.message)copy.append(E('p',entry.message));if(entry.reviewer_note)copy.append(E('p','Staff response: '+entry.reviewer_note));row.append(copy);
  const buttons=E('div');buttons.className='tms-driver-submission-actions';
  if(entry.storage_path){const b=E('button','View Private File');b.type='button';b.onclick=()=>viewPartnerDocument(entry);buttons.append(b)}
- if(canReview&&entry.review_status==='pending'){
+ if(canPublish&&entry.review_status==='accepted'&&entry.document_type==='pod_submission'&&!published.has('partner:'+entry.id)){const b=E('button','Publish Official POD');b.type='button';b.onclick=()=>publishPOD(entry,'partner');buttons.append(b)}if(canReview&&entry.review_status==='pending'){
   const options=entry.submission_kind==='message'?[['Respond','responded'],['Reject','rejected']]:[['Accept','accepted'],['Reject','rejected']];
   for(const [label,decision]of options){const b=E('button',label);b.type='button';b.onclick=()=>reviewPartner(entry,decision);buttons.append(b)}
  }
@@ -65,6 +83,6 @@ if(members.error)throw members.error;if(owned.error)throw owned.error;
 const allowed=[...new Set([...(members.data||[]).map(x=>x.workspace_id),...(owned.data||[]).map(x=>x.id)])],requested=new URLSearchParams(location.search).get('workspace');
 if(requested&&!allowed.includes(requested))throw Error('Access denied to this workspace');
 ws=requested||allowed[0];if(!ws)throw Error('No authorized workspace available');
-canReview=(owned.data||[]).some(x=>x.id===ws)||(members.data||[]).some(x=>x.workspace_id===ws&&['owner','admin','member'].includes(x.role));
+canReview=(owned.data||[]).some(x=>x.id===ws)||(members.data||[]).some(x=>x.workspace_id===ws&&['owner','admin','member'].includes(x.role));canPublish=(owned.data||[]).some(x=>x.id===ws)||(members.data||[]).some(x=>x.workspace_id===ws&&['owner','admin'].includes(x.role));
 await load();await loadPartnerExchange();
 }catch(error){report('Driver submissions unavailable: '+(error.message||'Unknown error'),true)}})();
