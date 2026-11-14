@@ -17,3 +17,5 @@
 .tms-driver-doc-table th{color:#617b99}
 .tms-driver-doc-table button{padding:7px 10px;border:1px solid #1768f5;background:#fff;border-radius:8px;color:#1768f5;cursor:pointer;font-weight:750}
 @media(max-width:700px){.tms-driver-documents{padding:16px}.tms-driver-doc-form{grid-template-columns:1fr}}
+
+.notices-shortcut{display:inline-flex;align-items:center;justify-content:center;border:1px solid #d6e1ef;border-radius:9px;padding:10px 14px;color:#a32942;background:#fff;font-size:12px;font-weight:750;text-decoration:none}.notices-shortcut:focus-visible{outline:3px solid #f1bf2a;outline-offset:2px}
