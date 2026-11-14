@@ -15,7 +15,16 @@ function show(){
  const gallons=fuel.reduce((a,r)=>a+Number(r.gallons||0),0),cost=fuel.reduce((a,r)=>a+Number(r.total_cost||0),0);$('fuelSummary').textContent=fuel.length+' purchases · '+gallons.toFixed(3)+' gallons · $'+cost.toFixed(2)+' in displayed entries (up to 1000)';
  renderList('mileageRows',mileage,(item,r)=>item.append(E('strong',unit(r.equipment_id)+' · '+r.jurisdiction+' · '+r.trip_date),E('span',Number(r.miles).toFixed(2)+' manual miles'),E('span',r.notes||'No source notes')));
  renderList('hosRows',hos,(item,r)=>item.append(E('strong',driver(r.driver_id)+' · '+r.attested_on),E('span',r.duty_status.replaceAll('_',' ')+' · MANUAL, NOT ELD VERIFIED'),E('span',r.notes||'No notes')));
- renderList('integrationRows',requests,(item,r)=>item.append(E('strong',r.provider_name+' · '+r.integration_kind.toUpperCase()),E('span','Status: '+r.approval_status+' · '+fmt(r.created_at)),E('span',r.requested_scope)));
+ renderList('integrationRows',requests,(item,r)=>{
+ item.append(E('strong',r.provider_name+' · '+r.integration_kind.toUpperCase()),E('span','Status: '+r.approval_status+' · '+fmt(r.created_at)),E('span',r.requested_scope));
+ if(r.admin_notes)item.append(E('span','Admin review: '+r.admin_notes));
+ if(canAdmin&&['requested','reviewing'].includes(r.approval_status)){
+  for(const [label,next] of [['Review','reviewing'],['Approve Request','approved'],['Reject','rejected']]){
+   if(next===r.approval_status)continue;
+   const button=E('button',label);button.type='button';button.onclick=()=>reviewIntegration(r,next);item.append(button);
+  }
+ }
+});
  document.querySelectorAll('.ops-form button').forEach(b=>b.disabled=!canWrite||((b.closest('form')?.id==='integrationForm')&&!canAdmin));
  $('exportFuel').disabled=!fuel.length;
 }
@@ -68,6 +77,15 @@ $('iftaExport').onclick=()=>{
  const url=URL.createObjectURL(blob);
  const link=document.createElement('a');link.href=url;link.download='workrelief-ifta-source-'+$('iftaFrom').value+'-'+$('iftaThrough').value+'.csv';link.click();URL.revokeObjectURL(url);
 };
+async function reviewIntegration(item,statusValue){
+ if(!canAdmin)return;
+ const notes=window.prompt('Enter review notes (no API keys or credentials):','');
+ if(notes===null)return;
+ if(statusValue==='rejected'&&notes.trim().length<5){message('A rejection needs a reason.',true);return}
+ const result=await sb.rpc('tms_review_integration_request',{p_workspace:ws,p_request:item.id,p_status:statusValue,p_notes:notes.trim()});
+ if(result.error){message('Review failed: '+result.error.message,true);return}
+ await reload();message('Request status updated. Approval does not connect or configure the provider.');
+}
 async function resolve(item){if(!canAdmin)return;const notes=window.prompt('Describe repairs and checks performed before resolving this safety-critical defect:');if(notes===null)return;if(notes.trim().length<8){message('Enter at least eight characters describing the repair and review.',true);return}
  try{const {error}=await sb.rpc('tms_resolve_vehicle_inspection',{p_workspace:ws,p_inspection:item.id,p_notes:notes.trim()});if(error)throw error;await reload();message('Inspection resolution recorded and dispatch hold updated.')}catch(error){message('Unable to resolve inspection: '+(error.message||'Unknown error'),true)}
 }
